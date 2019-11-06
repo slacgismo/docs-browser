@@ -1,3 +1,9 @@
+// config.js
+// Copyright (C) 2019 Regents of the Leland Stanford Junior University
+//
+// This module set the document specifications `host`, `owner`, `project`, `branch`, and `doc`
+// as given by the URL, or if absent, as given by the current defaults
+//
 var query = new URLSearchParams(window.location.search);
 var host = query.get('host');
 if ( host == null )

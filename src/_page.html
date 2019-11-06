@@ -7,24 +7,24 @@
 <SCRIPT LANGUAGE="JavaScript">
 function load_markdown(url)
 {
-    var r = new XMLHttpRequest()
-    r.open('GET',url,false)
+    var r = new XMLHttpRequest();
+    r.open('GET',url,false);
     r.send(null);
     if ( r.status == 200 )
     {
-        var rr = new XMLHttpRequest()
-        rr.open('POST','https://api.'+host+'/markdown/raw',false)
-        rr.send(r.responseText)
+        var rr = new XMLHttpRequest();
+        rr.open('POST','https://api.'+host+'/markdown/raw',false);
+        rr.send(r.responseText);
         if ( rr.status == 200 )
         {
-            var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g
+            var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g;
             function to_url(tag)
             {
-                ref = tag.substr(2,tag.length-4)
-                return "<A HREF=\"?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + ref + "</A>"
+                ref = tag.substr(2,tag.length-4);
+                return "<A HREF=\"?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + ref + "</A>";
             }
-            var ro = re[Symbol.replace](rr.responseText,to_url)
-            document.writeln(ro)
+            var ro = re[Symbol.replace](rr.responseText,to_url);
+            document.writeln(ro);
         }
         else //if ( rr.status != 404 )
         {                
@@ -42,14 +42,14 @@ function load_markdown(url)
 <BODY>
 
 <SCRIPT LANGUAGE="JavaScript">
-    var banner = "GridLAB-D Documentation";
+    var banner = "SLAC GISMo Docs Browser";
     var now = new Date();
     var copyright = "Copyright (C) " + now.getFullYear() + ", Regents of the Leland Stanford Junior University";
     var query = new URLSearchParams(window.location.search);
-    var href = location.origin+location.pathname.substring(0,location.pathname.lastIndexOf('/')+1);
-    // TODO: The replacement <name>.com ->raw.<name>usercontent.com is probably not general, but works for github.com.
-    //       Suggest using a static config document on the host to implement this translation.
-    var base = 'https://raw.'+host.replace(".com","usercontent.com")+'/' + owner + '/' + project + '/' + branch + '/docs/';
+    var href = location.origin + location.pathname.substring(0,location.pathname.lastIndexOf('/')+1);
+    // TODO: The replacement of <name>.com -> raw.<name>usercontent.com is probably not general, but works for github.com.
+    //       Suggest using a config.js on the host to implement this translation.
+    var base = 'https://r' + default_gethost + '/' + owner + '/' + project + '/' + branch + '/docs/';
 </SCRIPT>
 
 Source document:

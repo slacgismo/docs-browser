@@ -9,6 +9,7 @@
 		if ( event.key === 'Enter' )
 		{
 			host = element.value;
+            load_contents();
 		}
 	}
 	function set_owner(element)
@@ -16,6 +17,7 @@
 		if ( event.key === 'Enter' )
 		{
 			owner = element.value;
+            load_contents();
 		}
 	}
 	function set_project(element)
@@ -23,14 +25,19 @@
 		if ( event.key === 'Enter' )
 		{
 			project = element.value;
+            load_contents();
 		}
 	}
+    function refresh_contents()
+    {
+        window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
+    }
 	function load_contents()
     {
 	    var r = new XMLHttpRequest();
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
         r.send(null);
-        contents = ""
+        contents = "";
         if ( r.status == 200 )
         {
             JSON.parse(r.responseText, function (key,value)
@@ -65,7 +72,7 @@
 <TABLE WIDTH="100%">
 <CAPTION>GridLAB-D Documentation</CAPTION>
 <SCRIPT LANGUAGE="JavaScript">
-    var href = location.origin+location.pathname.replace('/_contents.html','/_page.html');
+    var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host()" NAME="host" VALUE="' + host + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" ONKEYDOWN="set_owner()" NAME="owner" VALUE="' + owner + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD><INPUT ID="project" ONKEYDOWN="set_project()" NAME="project" VALUE="' + project + '" /></TD></TR>');
@@ -91,19 +98,15 @@
 	}
     document.writeln('</SELECT>');
     document.writeln('</TD></TR>');
-
-	var doc = query.get('doc');
-	if ( doc == null )
-	{
-	    doc = "README.md";
-	}
 </SCRIPT>
 </TABLE>
 
 <HR/>
 
 <TABLE WIDTH="100%">
-<CAPTION>Table of Contents</CAPTION>
+<CAPTION>Table of Contents
+    <INPUT TYPE=SUBMIT ONSUBMIT="refresh_contents()" VALUE="Refresh"/>
+</CAPTION>
 </TABLE>
 
 <DIV ID="contents">
