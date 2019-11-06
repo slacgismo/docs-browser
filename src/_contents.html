@@ -70,7 +70,7 @@
 <BODY>
 
 <TABLE WIDTH="100%">
-<CAPTION>GridLAB-D Documentation</CAPTION>
+<CAPTION>SLAC GISMo Docs Browser</CAPTION>
 <SCRIPT LANGUAGE="JavaScript">
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host()" NAME="host" VALUE="' + host + '" /></TD></TR>');
@@ -101,13 +101,11 @@
 </SCRIPT>
 </TABLE>
 
-<HR/>
-
-<TABLE WIDTH="100%">
-<CAPTION>Table of Contents
+<DIV CLASS="contents">
+<CENTER>Table of Contents
     <INPUT TYPE=SUBMIT ONSUBMIT="refresh_contents()" VALUE="Refresh"/>
-</CAPTION>
-</TABLE>
+</CENTER>
+<HR/>
 
 <DIV ID="contents">
 <SCRIPT LANGUAGE="JavaScript">
@@ -121,7 +119,8 @@
     }
 </SCRIPT>
 </DIV>
-<HR/>
+
+</DIV>
 
 </BODY>
 </HTML>

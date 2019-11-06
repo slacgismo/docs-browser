@@ -57,7 +57,6 @@ Source document:
     url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs/' + doc;
     document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + url + '</A>');
 </SCRIPT>
-<HR/>
 
 <SCRIPT LANGUAGE="JavaScript">
     document.writeln('<DIV ID="header" CLASS="header">')
@@ -69,7 +68,8 @@ Source document:
     {
         document.writeln(banner);
     }
-    document.writeln('<HR/></DIV ID">')
+    document.writeln('</DIV>');
+    document.writeln('<DIV ID="page" CLASS="page">')
     try 
     {        
         load_markdown(base+doc);
@@ -78,6 +78,7 @@ Source document:
     {
         document.writeln("ERROR: "+err.message)
     }
+    document.writeln('</DIV>');
     document.writeln('<DIV ID="footer" CLASS="footer">')
     try 
     { 
@@ -88,8 +89,9 @@ Source document:
     {
         document.writeln(copyright);
     }
+    document.writeln('</DIV>');
 </SCRIPT>
-<HR/>
+
 </BODY>
 
 </HTML>

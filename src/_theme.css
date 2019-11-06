@@ -13,3 +13,15 @@ DIV.HEADER {
 DIV.FOOTER {
 	font-size: small;
 }
+
+DIV.PAGE {
+    border: 2px solid grey;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+DIV.CONTENTS {
+    border: 2px solid grey;
+    padding: 20px;
+    border-radius: 10px;
+}
