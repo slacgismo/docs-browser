@@ -20,20 +20,21 @@ function load_markdown(url)
             var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g;
             function to_url(tag)
             {
-                ref = tag.substr(2,tag.length-4);
-                return "<A HREF=\"?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + ref + "</A>";
+                tag = tag.substr(2,tag.length-4);
+                ref = (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
+                return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
             }
             var ro = re[Symbol.replace](rr.responseText,to_url);
             document.writeln(ro);
         }
         else //if ( rr.status != 404 )
         {                
-            throw ('<FONT COLOR=RED>[ERROR ' + rr.status + ' ['+url+'] '+rr.responseText+'</FONT><BR/>');
+            throw ('<FONT COLOR=RED>ERROR ' + rr.status + ' ['+url+'] ' + rr.responseText + '</FONT><BR/>');
         }
     }
     else //if ( r.status != 404 )
     {
-        throw ('<FONT COLOR=RED>[ERROR ' + r.status + ' ['+url+'] '+r.responseText+'</FONT><BR/>');
+        throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
     }
 }    
 </SCRIPT>
@@ -74,9 +75,9 @@ Source document:
     {        
         load_markdown(base+doc);
     }
-    catch (err)
+    catch (msg)
     {
-        document.writeln("ERROR: "+err.message)
+        document.writeln("<FONT COLOR=RED>" + msg + "</FONT>");
     }
     document.writeln('</DIV>');
     document.writeln('<DIV ID="footer" CLASS="footer">')
