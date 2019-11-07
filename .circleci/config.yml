@@ -5,7 +5,7 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.12
    
-    working_directory: ~/
+    working_directory: ~/repo
 
     steps:
       - checkout
