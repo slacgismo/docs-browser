@@ -1,14 +1,25 @@
-<!DOCTYPE HTML />
-<HTML>
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>SLAC GISMo Document Browser</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
-<SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
-<SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript">
-    var page = "host=" + host + "&owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + doc;
-    document.writeln('<FRAMESET COLS="' + left_panel_width + ',*">');
-    document.writeln('<FRAME SRC="_contents.html?' + page + '"/>');
-    document.writeln('<FRAME NAME="page" SRC="_page.html?' + page + '" />');
-    document.writeln('</FRAMESET>');
-</SCRIPT>
-
-</HTML>
+    <body>
+        <div id='main-content'></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="_defaults.js"></script>                
+        <script src="_config.js"></script>
+        <script type="text/javascript">
+            var params = 'host=' + host + '&owner=' + owner + '&project=' + project + '&branch=' + branch + '&doc=' + doc,
+                docMarkup = '<frameset cols="' + left_panel_width + ',*">' +
+                            '<frame src="_content.html?' + params + '" />' +
+                            '<frame name="page" src="_page.html?' + params + '" />' +
+                            '</frameset>';
+            console.warn(docMarkup)
+            $('#main-content').append(docMarkup);
+        </script>
+    </body>
+</html>
