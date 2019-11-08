@@ -13,6 +13,7 @@
     <body class="d-flex flex-column h-100">
         <main role="main" class="main-content flex-shrink-0">
             <div class="row">
+                <!--LEFT PANEL-->
                 <div class='col-md-3 d-none d-md-block bg-light sidebar'>
                     <p class='site-title-link'>
                         <a href="https://github.com/slacgismo/docs-browser" target="_blank">
@@ -41,19 +42,28 @@
                                 <option>master</option>
                             </select>
                             <small id="branch-help" class="form-text text-muted">Branch should be....</small>
-                        </div>
-                        <button class="btn btn-primary">Refresh</button>
+                        </div>                        
                     </form>
+                    <div class='table-of-contents'>
+                        <span>Table of Contents&nbsp;&nbsp;&nbsp;</span>
+                        <button id='refresh-data' class="btn btn-primary">Refresh</button>
+                    </div>
                 </div>
+
+                <!--RIGHT/MAIN PANEL-->
                 <div class='col-md-9 ml-sm-auto col-lg-10 px-4'></div>
             </div>
         </main>
+
+        <!--FOOTER-->
         <footer class='footer mt-auto py-3'>
             <div class='container'>
                 <a href="https://raw.githubusercontent.com/slacgismo/docs-browser/master/LICENSE" target="_blank">Copyright (C) 2019, Regents of the Leland Stanford Junior University</a>
             </div>
         </footer>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        
+        <!--SCRIPTS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="js/main.js"></script>
