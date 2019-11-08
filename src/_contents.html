@@ -70,8 +70,8 @@
 <BODY>
 
 <TABLE WIDTH="100%">
-<CAPTION>SLAC GISMo Docs Browser</CAPTION>
 <SCRIPT LANGUAGE="JavaScript">
+    document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host()" NAME="host" VALUE="' + host + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" ONKEYDOWN="set_owner()" NAME="owner" VALUE="' + owner + '" /></TD></TR>');
@@ -120,6 +120,11 @@
 </SCRIPT>
 </DIV>
 
+</DIV>
+<DIV CLASS="footer">
+<SCRIPT LANGUAGE="JavaScript">
+    document.writeln(copyright);
+</SCRIPT>
 </DIV>
 
 </BODY>

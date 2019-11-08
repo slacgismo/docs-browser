@@ -43,9 +43,6 @@ function load_markdown(url)
 <BODY>
 
 <SCRIPT LANGUAGE="JavaScript">
-    var banner = "SLAC GISMo Docs Browser";
-    var now = new Date();
-    var copyright = "Copyright (C) " + now.getFullYear() + ", Regents of the Leland Stanford Junior University";
     var query = new URLSearchParams(window.location.search);
     var href = location.origin + location.pathname.substring(0,location.pathname.lastIndexOf('/')+1);
     // TODO: The replacement of <name>.com -> raw.<name>usercontent.com is probably not general, but works for github.com.
@@ -67,7 +64,6 @@ Source document:
     } 
     catch (e) 
     {
-        document.writeln(banner);
     }
     document.writeln('</DIV>');
     document.writeln('<DIV ID="page" CLASS="page">')
@@ -88,7 +84,6 @@ Source document:
     } 
     catch (e) 
     {
-        document.writeln(copyright);
     }
     document.writeln('</DIV>');
 </SCRIPT>
