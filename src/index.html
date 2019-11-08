@@ -10,16 +10,9 @@
     <body>
         <div id='main-content'></div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="_defaults.js"></script>                
-        <script src="_config.js"></script>
-        <script type="text/javascript">
-            var params = 'host=' + host + '&owner=' + owner + '&project=' + project + '&branch=' + branch + '&doc=' + doc,
-                docMarkup = '<frameset cols="' + left_panel_width + ',*">' +
-                            '<frame src="_content.html?' + params + '" />' +
-                            '<frame name="page" src="_page.html?' + params + '" />' +
-                            '</frameset>';
-            console.warn(docMarkup)
-            $('#main-content').append(docMarkup);
-        </script>
+        <script src="js/main.js"></script>
+
+        <!-- <script src="_defaults.js"></script>                
+        <script src="_config.js"></script>         -->
     </body>
 </html>
