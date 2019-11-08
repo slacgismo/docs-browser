@@ -14,7 +14,7 @@
         <main role="main" class="main-content flex-shrink-0">
             <div class="row">
                 <!--LEFT PANEL-->
-                <div class='col-md-3 d-none d-md-block bg-light sidebar'>
+                <div class='col-md-2 d-none d-md-block bg-light sidebar'>
                     <p class='site-title-link'>
                         <a href="https://github.com/slacgismo/docs-browser" target="_blank">
                             SLAC GISMo Docs Browser
@@ -24,34 +24,45 @@
                         <div class="form-group">
                             <label for="host-input">Host</label>
                             <input type="text" class="form-control" id="host-input" aria-describedby="host-help" placeholder="Enter Host">
-                            <small id="host-help" class="form-text text-muted">Host should be....</small>
+                            <small id="host-help" class="form-text text-muted">
+                                This should generally be set to github.com but can be set to any host that support the GitHub API.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label for="user-org-input">User/Organization</label>
                             <input type="text" class="form-control" id="user-org-input" aria-describedby="user-org-help" placeholder="Enter User/Organization">
-                            <small id="user-org-help" class="form-text text-muted">User/Org should be....</small>
+                            <small id="user-org-help" class="form-text text-muted">
+                                This must be set to the default project owner (user or organization, e.g., slacgismo).
+                            </small>
                         </div>
                         <div class="form-group">
                             <label for="project-input">Project</label>
                             <input type="text" class="form-control" id="project-input" aria-describedby="project-help" placeholder="Enter Project">
-                            <small id="project-help" class="form-text text-muted">Project should be....</small>
+                            <small id="project-help" class="form-text text-muted">
+                                This must be set to the default project name (e.g., docs-browser).
+                            </small>
                         </div>
                         <div class="form-group">
-                            <label for="branch-input">Branch</label>
+                            <label for="branch-select">Branch</label>
                             <select class="form-control" id="branch-select" aria-describedby="branch-help">
                                 <option>master</option>
                             </select>
-                            <small id="branch-help" class="form-text text-muted">Branch should be....</small>
+                            <small id="branch-help" class="form-text text-muted">
+                                This should be set to the default branch (e.g., master).
+                            </small>
                         </div>                        
                     </form>
                     <div class='table-of-contents'>
                         <span>Table of Contents&nbsp;&nbsp;&nbsp;</span>
                         <button id='refresh-data' class="btn btn-primary">Refresh</button>
+                    
+                        <hr/>
+                        <div class='list-group' id='list-of-docs'></div>
                     </div>
                 </div>
 
                 <!--RIGHT/MAIN PANEL-->
-                <div class='col-md-9 ml-sm-auto col-lg-10 px-4'></div>
+                <div class='col-md-10'></div>
             </div>
         </main>
 

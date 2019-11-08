@@ -15,3 +15,6 @@ html {
 .table-of-contents {
     text-align: center;
 }
+#list-of-docs {
+    text-align: left;
+}
