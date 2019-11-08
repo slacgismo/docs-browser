@@ -11,5 +11,9 @@ var main = main || {}; // establish the main namespace
         ns.defaultGetHost = 'raw.githubusercontent.com';
     }
 
+    ns.getContent = function() {
+
+    }
+
     $(function() { onLoad() })
 })(main);
