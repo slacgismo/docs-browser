@@ -13,12 +13,34 @@
     <body class="d-flex flex-column h-100">
         <main role="main" class="main-content flex-shrink-0">
             <div class="row">
-                <div class='col-md-2 d-none d-md-block bg-light sidebar'>
+                <div class='col-md-3 d-none d-md-block bg-light sidebar'>
+                    <p class='site-title-link'>
+                        <a href="https://github.com/slacgismo/docs-browser" target="_blank">
+                            SLAC GISMo Docs Browser
+                        </a>
+                    </p>
                     <form class='nav-form'>
                         <div class="form-group">
                             <label for="host-input">Host</label>
                             <input type="text" class="form-control" id="host-input" aria-describedby="host-help" placeholder="Enter Host">
                             <small id="host-help" class="form-text text-muted">Host should be....</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-org-input">User/Organization</label>
+                            <input type="text" class="form-control" id="user-org-input" aria-describedby="user-org-help" placeholder="Enter User/Organization">
+                            <small id="user-org-help" class="form-text text-muted">User/Org should be....</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-input">Project</label>
+                            <input type="text" class="form-control" id="project-input" aria-describedby="project-help" placeholder="Enter Project">
+                            <small id="project-help" class="form-text text-muted">Project should be....</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="branch-input">Branch</label>
+                            <select class="form-control" id="branch-select" aria-describedby="branch-help">
+                                <option>master</option>
+                            </select>
+                            <small id="branch-help" class="form-text text-muted">Branch should be....</small>
                         </div>
                         <button class="btn btn-primary">Refresh</button>
                     </form>
@@ -28,7 +50,6 @@
         </main>
         <footer class='footer mt-auto py-3'>
             <div class='container'>
-                <a href="https://github.com/slacgismo/docs-browser" target="_blank">SLAC GISMo Docs Browser</a> <br />
                 <a href="https://raw.githubusercontent.com/slacgismo/docs-browser/master/LICENSE" target="_blank">Copyright (C) 2019, Regents of the Leland Stanford Junior University</a>
             </div>
         </footer>

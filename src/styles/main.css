@@ -3,5 +3,9 @@
     font-size: 0.7em;
 }
 .nav-form {
-    padding: 5px 10px;
+    padding: 10px;
+}
+.site-title-link {
+    text-align: center;
+    margin: 10px 0;
 }
