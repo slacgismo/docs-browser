@@ -28,13 +28,10 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
-          filters:  
-            tags:
-              only: /.*/
+      - build
       - deploy:
-        requires:
-          - build
-        filters:
-          branches:
-            only: master
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
