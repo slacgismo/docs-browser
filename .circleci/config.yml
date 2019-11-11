@@ -25,7 +25,7 @@ jobs:
           command: sudo pip install awscli
       - run:
           name: Deploy to S3
-          command: aws s3 sync src/ s3://document-browser --recursive
+          command: aws s3 sync src/ s3://document-browser
 
 workflows:
   version: 2
