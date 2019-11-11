@@ -29,7 +29,7 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - deploy:
+      - deploy-to-s3:
         requires:
           - build
         filters:
