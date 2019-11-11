@@ -13,13 +13,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Dependencies
-          command: sudo pip install awscli
+          name: Run Unit Tests
+          command: echo "I should really run unit tests. But they seem to always be an after thought....I'll add 'em in one day.'"
 
   deploy:
     <<: *368_config
     steps:
       - checkout
+      - run:
+          name: Install Dependencies
+          command: sudo pip install awscli
       - run:
           name: Deploy to S3
           command: aws s3 src/* s3://document-browser --recursive
