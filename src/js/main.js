@@ -53,14 +53,24 @@ var main = main || {};
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/contents/docs?ref=' + branch;
         
         $.get(url).done(function(data) {
-            // TODO: on click, need to set data[n].html_url as the source document and download_url
-            console.warn('success', data)
             let listItems = '';
+            let readmeLoaded = false;
             data.forEach(function(item) {
                 listItems += "<a href='#' class='list-group-item list-group-item-action' " +
-                    "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>"
+                    "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>";
+
+                // by default we want to load the README.md file
+                if(item.name === 'README.md') {
+                    ns.loadMarkdownContent(item);
+                    readmeLoaded = true;
+                }
             });
             ns.listOfDocsEl.html(listItems);
+
+            // if there was no readme, load the first document
+            if(!readmeLoaded) {
+                ns.loadMarkdownContent(data[0].item);
+            }
         }).fail(function(err) {
             // TODO: create error handler 
             console.warn('error', err)
@@ -72,26 +82,45 @@ var main = main || {};
      */
     ns.setupListeners = function() {
         ns.refreshDataBtn.click(function() {
-            alert('i was clicked');
+            // get all the input params
+            let selectedHost = ns.hostInputEl.val(),
+                selectedUserOrg = ns.userOrgInputEl.val(),
+                selectedProject = ns.projectInputEl.val();
+            // get the new content for the new params
+            ns.getContent(selectedHost, selectedUserOrg, selectedProject);
+            // get the new branch information
+            ns.getBranchInformation(selectedHost, selectedUserOrg, selectedProject);
+        });
+
+        ns.selectOptionEl.on('change', function() {
+            // get all the input params
+            let selectedHost = ns.hostInputEl.val(),
+                selectedUserOrg = ns.userOrgInputEl.val(),
+                selectedProject = ns.projectInputEl.val();
+            // get the new content for the new params
+            ns.getContent(selectedHost, selectedUserOrg, selectedProject, this.value);
         });
     }
 
     /**
      * Retrieve branch information for the given project and update
-     * the select/options with the data returned
+     * the select/options with the data returned.
+     * 
+     * Whenever this is called we assume we should default to master
      */
     ns.getBranchInformation = function(host = ns.defaultHost, 
                                        owner = ns.defaultOwner, 
                                        project = ns.defaultProject) {
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/branches?per_page=1000';
 
-        $.get(url).done(function(data) {
-            console.warn('success', data);
+        $.get(url).done(function(data) {            
             // build the options from the response
             var selectOptions = data.reduce(function(acc, currentVal, idx) {
-                var curOpt = '<option>' + currentVal.name + '</option>';
+                var curOpt = '<option value="' + currentVal.name + '" ' + (currentVal.name === ns.defaultBranch ? 'selected' : '') + '>' + 
+                    currentVal.name + '</option>';
                 if(idx === 1) {
-                    return '<option>' + acc.name + '</option>' + curOpt;
+                    return '<option value="' + acc.name + '" ' + (acc.name === ns.defaultBranch ? 'selected' : '') + '>' + 
+                        acc.name + '</option>' + curOpt;
                 }
                 return acc + curOpt;
             });
@@ -121,8 +150,7 @@ var main = main || {};
                 method: 'POST',
                 contentType: 'text/plain',
                 data: data
-            }).done(function(response) {
-                console.warn(response);
+            }).done(function(response) {                
                 ns.markdownPanelEl.html(response);
             }).fail(function(parserErr) {
                 // TODO: write error handler

@@ -43,6 +43,10 @@
                             </small>
                         </div>
                         <div class="form-group">
+                            <button id='refresh-data' class="btn btn-primary" type="button">Refresh</button>
+                        </div>
+                        <hr />
+                        <div class="form-group">
                             <label for="branch-select">Branch</label>
                             <select class="form-control" id="branch-select" aria-describedby="branch-help">
                                 <option>master</option>
@@ -50,15 +54,14 @@
                             <small id="branch-help" class="form-text text-muted">
                                 This should be set to the default branch (e.g., master).
                             </small>
-                        </div>                        
+                        </div>
+                        <br />
+                        <div class='table-of-contents'>
+                            <strong><span>Table of Contents&nbsp;&nbsp;&nbsp;</span></strong>
+                            <br /><br />
+                            <div class='list-group' id='list-of-docs'></div>
+                        </div>
                     </form>
-                    <hr />
-                    <div class='table-of-contents'>
-                        <span>Table of Contents&nbsp;&nbsp;&nbsp;</span>
-                        <button id='refresh-data' class="btn btn-primary">Refresh</button>
-                        <br /><br />
-                        <div class='list-group' id='list-of-docs'></div>
-                    </div>
                 </div>
 
                 <!--RIGHT/MAIN PANEL-->
