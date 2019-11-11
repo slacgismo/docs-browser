@@ -4,30 +4,7 @@
 <SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-	function set_host(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			host = element.value;
-            load_contents();
-		}
-	}
-	function set_owner(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			owner = element.value;
-            load_contents();
-		}
-	}
-	function set_project(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			project = element.value;
-            load_contents();
-		}
-	}
+	
     function refresh_contents()
     {
         window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
@@ -59,11 +36,7 @@
         }
         document.getElementById("contents").innerHTML = contents;
     }
-	function set_branch(element)
-	{
-		branch = document.getElementById("branch").value;
-		load_contents();
-	}
+	
 </SCRIPT>
 </HEAD>
 

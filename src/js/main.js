@@ -10,7 +10,7 @@ var main = main || {};
      * - Request initial required data
      */
     var onLoad = function() {
-        // setup our defaults
+        // set the main namespace default values
         ns.defaultHost = 'github.com';
         ns.defaultOwner = 'slacgismo';
         ns.defaultProject = 'docs-browser';
@@ -26,8 +26,8 @@ var main = main || {};
         ns.projectInputEl = $('#project-input');
         ns.listOfDocsEl = $('#list-of-docs');
 
-        ns.setDefaults();
-        ns.setupListeners();
+        ns.setDefaults();           // assign our defaults to the DOM
+        ns.setupListeners();        // attach event listeners to our DOM
         ns.getBranchInformation();
         ns.getContent();
     }
@@ -52,10 +52,12 @@ var main = main || {};
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/contents/docs?ref=' + branch;
         
         $.get(url).done(function(data) {
+            // TODO: on click, need to set data[n].html_url as the source document and download_url
             console.warn('success', data)
             let listItems = '';
             data.forEach(function(item) {
-                listItems += '<a href="#" class="list-group-item list-group-item-action">' + item.name + '</a>'
+                listItems += "<a href='#' class='list-group-item list-group-item-action' " +
+                    "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>"
             });
             ns.listOfDocsEl.html(listItems);
         }).fail(function(err) {
@@ -69,8 +71,8 @@ var main = main || {};
      */
     ns.setupListeners = function() {
         ns.refreshDataBtn.click(function() {
-            alert('i was clicked')
-        })
+            alert('i was clicked');
+        });
     }
 
     /**
@@ -100,6 +102,10 @@ var main = main || {};
         });
     }
 
+    ns.loadMarkdownContent = function(item) {
+        console.warn(item);
+    }
+
     // on document.ready, get everything going
-    $(function() { onLoad() })
+    $(function() { onLoad(); })
 })(main);
