@@ -25,6 +25,7 @@ var main = main || {};
         ns.userOrgInputEl = $('#user-org-input');
         ns.projectInputEl = $('#project-input');
         ns.listOfDocsEl = $('#list-of-docs');
+        ns.markdownPanelEl = $('#markdown-panel');
 
         ns.setDefaults();           // assign our defaults to the DOM
         ns.setupListeners();        // attach event listeners to our DOM
@@ -85,7 +86,7 @@ var main = main || {};
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/branches?per_page=1000';
 
         $.get(url).done(function(data) {
-            console.warn('success', data)
+            console.warn('success', data);
             // build the options from the response
             var selectOptions = data.reduce(function(acc, currentVal, idx) {
                 var curOpt = '<option>' + currentVal.name + '</option>';
@@ -98,12 +99,39 @@ var main = main || {};
             ns.selectOptionEl.html(selectOptions);
         }).fail(function(err) {
             // TODO: create error handler
-            console.warn('error', err)
+            console.warn('error', err);
         });
     }
 
-    ns.loadMarkdownContent = function(item) {
-        console.warn(item);
+    /**
+     * Use the host's API to convert raw markdown into an HTML doc.
+     * We first perform an api request for the raw content (markdown),
+     * then send it to another api endpoint to convert it into the appropriate
+     * markup that we then display on screen.
+     */
+    ns.loadMarkdownContent = function(item, host = ns.defaultHost) {
+        const contentUrl = item.download_url,
+            markdownParserUrl = 'https://api.' + host + '/markdown/raw';
+
+        // get the markdown content
+        $.get(contentUrl).done(function(data) {
+            // parse the markdown response
+            $.ajax({
+                url: markdownParserUrl,
+                method: 'POST',
+                contentType: 'text/plain',
+                data: data
+            }).done(function(response) {
+                console.warn(response);
+                ns.markdownPanelEl.html(response);
+            }).fail(function(parserErr) {
+                // TODO: write error handler
+                console.warn(parserErr);
+            });
+        }).fail(function(err) {
+            // TODO: write error handler
+            console.warn(err);
+        });
     }
 
     // on document.ready, get everything going
