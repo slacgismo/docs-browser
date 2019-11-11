@@ -5,7 +5,7 @@
 <SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
 <SCRIPT SRC="https://polyfill.io/v3/polyfill.min.js?features=es6"></SCRIPT>
-<SCRIPT ID="MathJax-script" ASYNC SRC="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></SCRIPT>
+<SCRIPT ID="MathJax-script" SRC="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
 function load_markdown(url)
 {
@@ -33,6 +33,9 @@ function load_markdown(url)
         {                
             throw ('<FONT COLOR=RED>ERROR ' + rr.status + ' ['+url+'] ' + rr.responseText + '</FONT><BR/>');
         }
+        MathJax.startup.document.state(0);
+        MathJax.texReset();
+        MathJax.typeset();
     }
     else //if ( r.status != 404 )
     {
