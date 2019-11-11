@@ -11,3 +11,11 @@ The Docs-Browser searches the `docs` folder in project branches for instances of
 3. Spaces must be replaced by hyphens.
 
 
+# Extensions
+
+The following extensions are supported.
+
+## MathJax
+
+You may embed math inline using the `\(equation\)` syntax, and on a separate line using the `\[equation\]` syntax.  For example, when \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+  \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
