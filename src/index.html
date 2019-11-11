@@ -1,14 +1,85 @@
-<!DOCTYPE HTML />
-<HTML>
+<!doctype html>
+<html class="h-100">
+    <head>
+    <meta charset="utf-8">
+    <title>SLAC GISMo Document Browser</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/main.css">
+    </head>
 
-<SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
-<SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
-<SCRIPT LANGUAGE="JavaScript">
-    var page = "host=" + host + "&owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + doc;
-    document.writeln('<FRAMESET COLS="' + left_panel_width + ',*">');
-    document.writeln('<FRAME SRC="_contents.html?' + page + '"/>');
-    document.writeln('<FRAME NAME="page" SRC="_page.html?' + page + '" />');
-    document.writeln('</FRAMESET>');
-</SCRIPT>
+    <body class="d-flex flex-column h-100">
+        <main role="main" class="main-content flex-shrink-0">
+            <div class="row">
+                <!--LEFT PANEL-->
+                <div class='col-md-2 d-none d-md-block bg-light sidebar'>
+                    <p class='site-title-link'>
+                        <a href="https://github.com/slacgismo/docs-browser" target="_blank">
+                            SLAC GISMo Docs Browser
+                        </a>
+                    </p>
+                    <form class='nav-form'>
+                        <div class="form-group">
+                            <label for="host-input">Host</label>
+                            <input type="text" class="form-control" id="host-input" aria-describedby="host-help" placeholder="Enter Host">
+                            <small id="host-help" class="form-text text-muted">
+                                This should generally be set to github.com but can be set to any host that support the GitHub API.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-org-input">User/Organization</label>
+                            <input type="text" class="form-control" id="user-org-input" aria-describedby="user-org-help" placeholder="Enter User/Organization">
+                            <small id="user-org-help" class="form-text text-muted">
+                                This must be set to the default project owner (user or organization, e.g., slacgismo).
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-input">Project</label>
+                            <input type="text" class="form-control" id="project-input" aria-describedby="project-help" placeholder="Enter Project">
+                            <small id="project-help" class="form-text text-muted">
+                                This must be set to the default project name (e.g., docs-browser).
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <button id='refresh-data' class="btn btn-primary" type="button">Refresh</button>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label for="branch-select">Branch</label>
+                            <select class="form-control" id="branch-select" aria-describedby="branch-help">
+                                <option>master</option>
+                            </select>
+                            <small id="branch-help" class="form-text text-muted">
+                                This should be set to the default branch (e.g., master).
+                            </small>
+                        </div>
+                        <br />
+                        <div class='table-of-contents'>
+                            <strong><span>Table of Contents&nbsp;&nbsp;&nbsp;</span></strong>
+                            <br /><br />
+                            <div class='list-group' id='list-of-docs'></div>
+                        </div>
+                    </form>
+                </div>
 
-</HTML>
+                <!--RIGHT/MAIN PANEL-->
+                <div id='markdown-panel' class='col-md-10'></div>
+            </div>
+        </main>
+
+        <!--FOOTER-->
+        <footer class='footer mt-auto py-3'>
+            <div class='container'>
+                <a href="https://raw.githubusercontent.com/slacgismo/docs-browser/master/LICENSE" target="_blank">Copyright (C) 2019, Regents of the Leland Stanford Junior University</a>
+            </div>
+        </footer>
+        
+        <!--SCRIPTS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

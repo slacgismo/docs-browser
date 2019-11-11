@@ -1,0 +1,20 @@
+html {
+    font-size: 0.8em;
+}
+.footer {
+    background-color: #f5f5f5;
+    font-size: 0.7em;
+}
+.nav-form {
+    padding: 10px;
+}
+.site-title-link {
+    text-align: center;
+    margin: 10px 0;
+}
+.table-of-contents {
+    text-align: center;
+}
+#list-of-docs {
+    text-align: left;
+}
