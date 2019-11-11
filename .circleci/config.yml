@@ -16,7 +16,7 @@ jobs:
           name: Install Dependencies
           command: sudo pip install awscli
 
-  deploy-to-s3:
+  deploy:
     <<: *368_config
     steps:
       - checkout
@@ -28,8 +28,11 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
-      - deploy-to-s3:
+      - build:
+          filters:  
+            tags:
+              only: /.*/
+      - deploy:
         requires:
           - build
         filters:
