@@ -25,8 +25,7 @@ function load_markdown(url)
                 return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
             }
             var ro = re[Symbol.replace](rr.responseText,to_url);
-            var re = /rel="nofollow"/g;
-            document.writeln(re[Symbol.replace](ro,"target=\"_blank\""));
+            document.writeln((/rel="nofollow"/g)[Symbol.replace](ro,"target=\"_blank\""));
         }
         else //if ( rr.status != 404 )
         {                
