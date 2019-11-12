@@ -29,4 +29,4 @@ You may use the standard Latex AMS math expressions to use other Latex features.
     x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}
     \\label{eq:example}
 \\end{equation}
-which can then be referenced as Equation (\\eqref{eq:example}).
+which can then be referenced as Equation (\\ref{eq:example}).
