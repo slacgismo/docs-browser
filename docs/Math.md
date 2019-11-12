@@ -10,8 +10,7 @@ If you wish to present a dollar sign in your text, you must use `\$` to avoid em
 
 ## Equations
 
-To embed an equation line, use the $$equation$$ or `\[equation\]` syntax.
-For example, `$$a \ne 0$$` displays $$a \ne 0$$ and `\[ax^2 + bx + c = 0\]` displays \[ax^2 + bx + c = 0\].
+To embed an equation line, use the `$$equation$$` or `\[equation\]` syntax. For example, `$$a \ne 0$$` displays $$a \ne 0$$ and `\[ax^2 + bx + c = 0\]` displays \[ax^2 + bx + c = 0\].
 
 ## Equation numbers
 
