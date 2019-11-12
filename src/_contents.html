@@ -4,36 +4,15 @@
 <SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-	function set_host(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			host = element.value;
-            load_contents();
-		}
-	}
-	function set_owner(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			owner = element.value;
-            load_contents();
-		}
-	}
-	function set_project(element)
-	{
-		if ( event.key === 'Enter' )
-		{
-			project = element.value;
-            load_contents();
-		}
-	}
     function refresh_contents()
     {
         window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
     }
 	function load_contents()
     {
+        host = document.getElementById("host").value;
+        owner = document.getElementById("owner").value;
+        project = document.getElementById("project").value;
 	    var r = new XMLHttpRequest();
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
         r.send(null);
@@ -73,9 +52,9 @@
 <SCRIPT LANGUAGE="JavaScript">
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
-    document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host()" NAME="host" VALUE="' + host + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" ONKEYDOWN="set_owner()" NAME="owner" VALUE="' + owner + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD><INPUT ID="project" ONKEYDOWN="set_project()" NAME="project" VALUE="' + project + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host(event)" NAME="host" VALUE="' + host + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" ONKEYDOWN="set_owner(event)" NAME="owner" VALUE="' + owner + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD><INPUT ID="project" ONKEYDOWN="set_project(event)" NAME="project" VALUE="' + project + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
     document.writeln('<SELECT ID="branch" ONCHANGE="set_branch()">')
     var r = new XMLHttpRequest();
