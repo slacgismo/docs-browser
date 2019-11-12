@@ -4,44 +4,58 @@
 <LINK rel="stylesheet" type="text/css" href="_theme.css" />
 <SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
+<SCRIPT LANGUAGE="Javascript">
+    window.MathJax = {
+        tex2jax: {
+            inlineMath: [["$","$"],["\\(","\\)"]],
+            displayMath: [["$$","$$"],["\\[","\\]"]],
+            processEscapes: true
+        }
+    };
+</SCRIPT>
 <SCRIPT SRC="https://polyfill.io/v3/polyfill.min.js?features=es6"></SCRIPT>
-<SCRIPT ID="MathJax-script" SRC="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></SCRIPT>
+<SCRIPT ID="MathJax-script" SRC="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></SCRIPT>
 <SCRIPT LANGUAGE="JavaScript">
-function load_markdown(url)
-{
-    var r = new XMLHttpRequest();
-    r.open('GET',url,false);
-    r.send(null);
-    if ( r.status == 200 )
+    function load_markdown(url)
     {
-        var rr = new XMLHttpRequest();
-        rr.open('POST','https://api.'+host+'/markdown/raw',false);
-        rr.send(r.responseText);
-        if ( rr.status == 200 )
+        var r = new XMLHttpRequest();
+        r.open('GET',url,false);
+        r.send(null);
+        if ( r.status == 200 )
         {
-            var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g;
-            function to_url(tag)
+            var rr = new XMLHttpRequest();
+            rr.open('POST','https://api.'+host+'/markdown/raw',false);
+            rr.send(r.responseText);
+            if ( rr.status == 200 )
             {
-                tag = tag.substr(2,tag.length-4);
-                ref = (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
-                return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
+                var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g;
+                function to_url(tag)
+                {
+                    tag = tag.substr(2,tag.length-4);
+                    ref = (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
+                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
+                }
+                var ro = re[Symbol.replace](rr.responseText,to_url);
+                document.writeln(ro);
             }
-            var ro = re[Symbol.replace](rr.responseText,to_url);
-            document.writeln(ro);
+            else //if ( rr.status != 404 )
+            {                
+                throw ('<FONT COLOR=RED>ERROR ' + rr.status + ' ['+url+'] ' + rr.responseText + '</FONT><BR/>');
+            }
+            // MathJax.Hub.Queue(
+            //     ["resetEquationNumbers",MathJax.InputJax.Tex],
+            //     ["PreProcess",MathJax.Hub],
+            //     ["ReProcess",MathJax.Hub]
+            //     );
+            // MathJax.startup.document.state(0);
+            // MathJax.texReset();
+            //MathJax.typeset();
         }
-        else //if ( rr.status != 404 )
-        {                
-            throw ('<FONT COLOR=RED>ERROR ' + rr.status + ' ['+url+'] ' + rr.responseText + '</FONT><BR/>');
+        else //if ( r.status != 404 )
+        {
+            throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
         }
-        MathJax.startup.document.state(0);
-        MathJax.texReset();
-        MathJax.typeset();
-    }
-    else //if ( r.status != 404 )
-    {
-        throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
-    }
-}    
+    }    
 </SCRIPT>
 </HEAD>
 
