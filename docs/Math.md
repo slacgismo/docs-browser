@@ -4,7 +4,7 @@ You may include mathematical formulae and equations using Latex AMS math syntax.
 
 ## Inline math
 
-To embed an inline mathematical expression, use the `$formula$` or `\(formula\)` expressions.  For example, `$a \ne 0$` displays $a \ne 0$ and `\(ax^2 + bx + c = 0\)` displays \(ax^2 + bx + c = 0\).
+To embed an inline mathematical expression, use the `$formula$` or `\(formula\)` expressions.  For example, `$a \ne 0$` displays $a \ne 0$ and `\\(ax^2 + bx + c = 0\\)` displays \\(ax^2 + bx + c = 0\\).
 
 If you wish to present a dollar sign in your text, you must use `\$` to avoid embedding a math expression unintentionally.
 
