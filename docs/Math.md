@@ -24,7 +24,7 @@ are both valid.
 
 ## Equation numbers
 
-You may use the standard Latex AMS math expressions to use other Latex features. For example, the following creates a numbered equation, e.g.,
+You may use the standard Latex AMS math expressions for most Latex features. For example, the following creates a numbered equation, e.g.,
 \\begin{equation}
     x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}
     \\label{eq:example}
