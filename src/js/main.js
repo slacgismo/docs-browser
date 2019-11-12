@@ -152,6 +152,7 @@ var main = main || {};
                 data: data
             }).done(function(response) {                
                 ns.markdownPanelEl.html(response);
+                ns.typesetMathematicalFormulas();
             }).fail(function(parserErr) {
                 // TODO: write error handler
                 console.warn(parserErr);
@@ -160,6 +161,15 @@ var main = main || {};
             // TODO: write error handler
             console.warn(err);
         });
+    }
+
+    /**
+     * Force our math processing api to re-typeset the page
+     * We are currently using MathJax
+     */
+    ns.typesetMathematicalFormulas = function(mathApi = MathJax) {
+        console.warn('calling mathjax api', mathApi)
+        mathApi.typeset();
     }
 
     // on document.ready, get everything going
