@@ -9,12 +9,6 @@
 
 <TABLE WIDTH="100%">
 <SCRIPT LANGUAGE="JavaScript">
-    function get_inputs()
-    {
-        host = document.getElementById("host").value;
-        owner = document.getElementById("owner").value;
-        project = document.getElementById("project").value;
-    }
     function set_owner(event)
     {
         if ( event == null || event.key === 'Enter' )
@@ -53,45 +47,43 @@
     }
     function set_project(event)
     {
-            var selector = document.querySelector('#branch');
-            while ( selector.options.length > 0 )
+        var selector = document.querySelector('#branch');
+        while ( selector.options.length > 0 )
+        {
+            selector.remove(0);
+        }
+        host = document.getElementById("host").value;
+        owner = document.getElementById("owner").value;
+        project = document.getElementById("project").value;
+        var r = new XMLHttpRequest();
+        r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
+        r.send(null);
+        if ( r.status == 200 )
+        {
+            JSON.parse(r.responseText, function (key,value)
             {
-                selector.remove(0);
-            }
-            host = document.getElementById("host").value;
-            owner = document.getElementById("owner").value;
-            project = document.getElementById("project").value;
-            var r = new XMLHttpRequest();
-            r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
-            r.send(null);
-            if ( r.status == 200 )
-            {
-                JSON.parse(r.responseText, function (key,value)
+                if ( key == 'name' )
                 {
-                    if ( key == 'name' )
-                    {
-                        var opt = document.createElement("option");
-                        opt.text = value;
-                        opt.value = value;
-                        selector.add(opt,null);
-                    }
-                })
-                selector.value = branch;
-                if ( selector.value != branch )
-                {
-                    selector.value = "master";
+                    var opt = document.createElement("option");
+                    opt.text = value;
+                    opt.value = value;
+                    selector.add(opt,null);
                 }
+            })
+            selector.value = branch;
+            if ( selector.value != branch )
+            {
+                selector.value = "master";
             }
-            set_branch();
+        }
+        set_branch(null);
     }
-    function refresh_contents()
+    function set_branch(event)
     {
-        get_inputs();
-        window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
-    }
-    function load_contents()
-    {
-        get_inputs();
+        host = document.getElementById("host").value;
+        owner = document.getElementById("owner").value;
+        project = document.getElementById("project").value;
+        branch = document.getElementById("branch").value;
         var r = new XMLHttpRequest();
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
         r.send(null);
@@ -111,23 +103,26 @@
             })
 
         }
+        else if ( r.status == 404 )
+        {
+            contents = "No documents listed";
+        }
+        else if ( r.status == 403 )
+        {
+            contents = "Access rate limited";
+        }
         else
         {
             contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
         document.getElementById("contents").innerHTML = contents;
     }
-    function set_branch(element)
-    {
-        branch = document.getElementById("branch").value;
-        load_contents();
-    }
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" NAME="owner" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" NAME="owner" ONBLUR="set_owner(null)" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD>')
-    document.writeln('<SELECT ID="project" ONCHANGE="load_contents()">');
+    document.writeln('<SELECT ID="project" ONCHANGE="set_project()">');
     document.writeln('</SELECT></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
     document.writeln('<SELECT ID="branch" ONCHANGE="set_branch()">')
@@ -137,21 +132,10 @@
 </TABLE>
 
 <DIV CLASS="contents">
-<CENTER>Table of Contents
-    <INPUT TYPE=SUBMIT ONSUBMIT="refresh_contents()" VALUE="Refresh"/>
-</CENTER>
+<CENTER>Table of Contents</CENTER>
 <HR/>
 
 <DIV ID="contents">
-<SCRIPT LANGUAGE="JavaScript">
-    try
-    {
-    	load_contents();
-    }
-    catch (err)
-    {
-        document.writeln("ERROR: " + err.message);
-    }
 </SCRIPT>
 </DIV>
 
