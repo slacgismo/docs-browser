@@ -51,6 +51,14 @@
             // MathJax.texReset();
             //MathJax.typeset();
         }
+        else if ( r.status == 404 )
+        {
+            "Document not found";
+        }
+        else if ( r.status == 403 )
+        {
+            "Access rate limited";
+        }
         else //if ( r.status != 404 )
         {
             throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
