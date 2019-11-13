@@ -5,7 +5,7 @@
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
 </HEAD>
 
-<BODY ONLOAD="set_project(null)">
+<BODY ONLOAD="set_owner(null)">
 
 <TABLE WIDTH="100%">
 <SCRIPT LANGUAGE="JavaScript">
@@ -17,7 +17,7 @@
     }
     function set_owner(event)
     {
-        if ( event.key === 'Enter' )
+        if ( event == null || event.key === 'Enter' )
         {
             var selector = document.querySelector('#project');
             while ( selector.options.length > 0 )
