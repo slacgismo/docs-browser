@@ -19,8 +19,13 @@
     {
         if ( event.key === 'Enter' )
         {
+            var selector = document.querySelector('#project');
+            while ( selector.options.length > 0 )
+            {
+                selector.remove(0);
+            }
+            host = document.getElementById("host").value;
             owner = document.getElementById("owner").value;
-            select = '<SELECT ONCHANGE="load_contents()">\n';
             var r = new XMLHttpRequest();
             r.open('GET','https://api.'+host+'/users/'+owner+'/repos?per_page=100',false);
             r.send(null);
@@ -30,20 +35,54 @@
                 {
                     if ( key == 'full_name' )
                     {
-                        value = value.substring(owner.length+1)
-                        select += ('<OPTION VALUE="'+value+'"');
-                        if ( value == branch )
-                        {
-                            select += (' SELECTED');
-                        }
-                        select += ('>'+value+'</OPTION>\n');
+                        value = value.substring(owner.length+1);
+                        var opt = document.createElement("option");
+                        opt.text = value;
+                        opt.value = value;
+                        selector.add(opt,null);
                     }
                 })
+                selector.value = project;
+                if ( selector.value === "" )
+                {
+                    selector.value = selector.options[0].value;
+                }
             }
-            select += '</SELECT>';
-            window.console.info(select);
-            document.getElementById("projects").innerHtml = select;
+            set_project(event);
         }
+    }
+    function set_project(event)
+    {
+            var selector = document.querySelector('#branch');
+            while ( selector.options.length > 0 )
+            {
+                selector.remove(0);
+            }
+            host = document.getElementById("host").value;
+            owner = document.getElementById("owner").value;
+            project = document.getElementById("project").value;
+            var r = new XMLHttpRequest();
+            r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
+            r.send(null);
+            if ( r.status == 200 )
+            {
+                JSON.parse(r.responseText, function (key,value)
+                {
+                    if ( key == 'name' )
+                    {
+                        var opt = document.createElement("option");
+                        opt.text = value;
+                        opt.value = value;
+                        selector.add(opt,null);
+                    }
+                })
+                selector.value = branch;
+                if ( selector.value != branch )
+                {
+                    selector.value = "master";
+                }
+            }
+            load_contents();
     }
     function refresh_contents()
     {
@@ -89,46 +128,9 @@
     document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" NAME="owner" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD>')
     document.writeln('<SELECT ID="project" ONCHANGE="load_contents()">');
-    var r = new XMLHttpRequest();
-    r.open('GET','https://api.'+host+'/users/'+owner+'/repos?per_page=100',false);
-    r.send(null);
-    if ( r.status == 200 )
-    {
-        JSON.parse(r.responseText, function (key,value)
-        {
-            if ( key == 'full_name' )
-            {
-                value = value.substring(owner.length+1)                
-                document.writeln('<OPTION VALUE="'+value+'"');
-                if ( value == branch )
-                {
-                    document.writeln(' SELECTED');
-                }
-                document.writeln('>'+value+'</OPTION>\n');
-            }
-        })
-    }
     document.writeln('</SELECT></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
     document.writeln('<SELECT ID="branch" ONCHANGE="set_branch()">')
-    var r = new XMLHttpRequest();
-    r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
-    r.send(null);
-    if ( r.status == 200 )
-    {
-        JSON.parse(r.responseText, function (key,value)
-        {
-            if ( key == 'name' )
-            {
-                document.writeln('<OPTION VALUE="'+value+'"');
-            	if ( value == branch )
-            	{
-            		document.writeln(' SELECTED');
-            	}
-                document.writeln('>'+value+'</OPTION>\n');
-            }
-        })
-	}
     document.writeln('</SELECT>');
     document.writeln('</TD></TR>');
 </SCRIPT>
