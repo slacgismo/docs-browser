@@ -3,17 +3,57 @@
 <LINK rel="stylesheet" type="text/css" href="_theme.css" />
 <SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%">
 <SCRIPT LANGUAGE="JavaScript">
-    function refresh_contents()
-    {
-        window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
-    }
-	function load_contents()
+    function get_inputs()
     {
         host = document.getElementById("host").value;
         owner = document.getElementById("owner").value;
         project = document.getElementById("project").value;
-	    var r = new XMLHttpRequest();
+    }
+    function set_owner(event)
+    {
+        if ( event.key === 'Enter' )
+        {
+            owner = document.getElementById("owner").value;
+            select = '<SELECT ONCHANGE="load_contents()">\n';
+            var r = new XMLHttpRequest();
+            r.open('GET','https://api.'+host+'/users/'+owner+'/repos?per_page=100',false);
+            r.send(null);
+            if ( r.status == 200 )
+            {
+                JSON.parse(r.responseText, function (key,value)
+                {
+                    if ( key == 'full_name' )
+                    {
+                        value = value.substring(owner.length+1)
+                        select += ('<OPTION VALUE="'+value+'"');
+                        if ( value == branch )
+                        {
+                            select += (' SELECTED');
+                        }
+                        select += ('>'+value+'</OPTION>\n');
+                    }
+                })
+            }
+            select += '</SELECT>';
+            window.console.info(select);
+            document.getElementById("projects").innerHtml = select;
+        }
+    }
+    function refresh_contents()
+    {
+        get_inputs();
+        window.location.href = location.origin + location.pathname + "?host=" + host + "&owner=" + owner + "&project=" + project;
+    }
+    function load_contents()
+    {
+        get_inputs();
+        var r = new XMLHttpRequest();
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
         r.send(null);
         contents = "";
@@ -23,42 +63,56 @@
             {
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
                 {
-                	docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
+                    docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
                     contents = contents + ('<A HREF="' + docspec + '" TARGET="page">');
                     contents = contents + (value.substring(0,value.length-3));
                     contents = contents + ('</A>');
-	                contents = contents + ('<BR/>')
+                    contents = contents + ('<BR/>')
                 }
             })
 
         }
         else
         {
-	        contents = contents + ("ERROR " + r.status + ": " + r.responseText);
+            contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
         document.getElementById("contents").innerHTML = contents;
     }
-	function set_branch(element)
-	{
-		branch = document.getElementById("branch").value;
-		load_contents();
-	}
-</SCRIPT>
-</HEAD>
-
-<BODY>
-
-<TABLE WIDTH="100%">
-<SCRIPT LANGUAGE="JavaScript">
+    function set_branch(element)
+    {
+        branch = document.getElementById("branch").value;
+        load_contents();
+    }
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
-    document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" ONKEYDOWN="set_host(event)" NAME="host" VALUE="' + host + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" ONKEYDOWN="set_owner(event)" NAME="owner" VALUE="' + owner + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD><INPUT ID="project" ONKEYDOWN="set_project(event)" NAME="project" VALUE="' + project + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" NAME="owner" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD>')
+    document.writeln('<SELECT ID="project" ONCHANGE="load_contents()">');
+    var r = new XMLHttpRequest();
+    r.open('GET','https://api.'+host+'/users/'+owner+'/repos?per_page=100',false);
+    r.send(null);
+    if ( r.status == 200 )
+    {
+        JSON.parse(r.responseText, function (key,value)
+        {
+            if ( key == 'full_name' )
+            {
+                value = value.substring(owner.length+1)                
+                document.writeln('<OPTION VALUE="'+value+'"');
+                if ( value == branch )
+                {
+                    document.writeln(' SELECTED');
+                }
+                document.writeln('>'+value+'</OPTION>\n');
+            }
+        })
+    }
+    document.writeln('</SELECT></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
     document.writeln('<SELECT ID="branch" ONCHANGE="set_branch()">')
     var r = new XMLHttpRequest();
-    r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=1000',false);
+    r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
     r.send(null);
     if ( r.status == 200 )
     {
