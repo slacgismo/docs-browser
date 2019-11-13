@@ -18,3 +18,10 @@ html {
 #list-of-docs {
     text-align: left;
 }
+.navbar-default {
+    background-image: linear-gradient( white, #e6effc);
+}
+.navbar-logo {
+    height:50px;
+    padding: 0 0 0 0;
+}
