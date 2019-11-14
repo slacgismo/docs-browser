@@ -76,33 +76,73 @@
                 selector.value = "master";
             }
         }
-        set_branch(null);
+        set_branch(null,"");
     }
-    function set_branch(event)
+    function set_branch(event,path)
     {
         host = document.getElementById("host").value;
         owner = document.getElementById("owner").value;
         project = document.getElementById("project").value;
         branch = document.getElementById("branch").value;
+        if ( typeof(path) == "string") 
+        {
+            folder = path;
+        }
+        document.getElementById("contents").innerHTML = get_contents("");
+    }
+    function get_contents(path)
+    {
+        if ( path == "" )
+        {
+            contents = "";
+        }
+        //alert('set_branch("' + folder + '")')
         var r = new XMLHttpRequest();
-        r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
+        r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs' + path + '?ref='+branch,false);
         r.send(null);
-        contents = "";
-        doclist = []
         if ( r.status == 200 )
         {
+            JSON.parse(r.responseText, function (key,value)
+            {
+                if ( key == 'name' )
+                {
+                    try 
+                    { 
+                        ext = value.split('.');
+                        if ( ext.length == 1 || ( ext[0] === "" && ext.length == 2 ) )
+                            ext = "";
+                        else
+                            ext = ext.pop();
+                    } 
+                    catch(e) 
+                    { 
+                        ext = ""; 
+                    }
+                    if ( ext === "" && value.substring(0,1) != '_' )
+                    {
+                        docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
+                        contents += '<B><A REL="nofollow" ONCLICK="set_branch(\'/' + value + '\')">';
+                        contents += value;
+                        contents += '/</A></B>';
+                        contents += '<BR/>';
+                        if ( value === folder )
+                        {
+                            contents += get_contents(value);
+                        }
+                    }
+                }
+            });
             JSON.parse(r.responseText, function (key,value)
             {
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
                 {
                     docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                    contents = contents + ('<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">');
-                    contents = contents + (value.substring(0,value.length-3));
-                    contents = contents + ('</A>');
-                    contents = contents + ('<BR/>')
-                    doclist.push(value);
+                    contents += '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">';
+                    contents += value.substring(0,value.length-3);
+                    contents +='</A>';
+                    contents += '<BR/>';
                 }
-            })
+            });
         }
         else if ( r.status == 404 )
         {
@@ -116,7 +156,7 @@
         {
             contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
-        document.getElementById("contents").innerHTML = contents;
+        return contents;
     }
     function get_document(doc)
     {
@@ -134,7 +174,7 @@
     document.writeln('<SELECT ID="project" ONCHANGE="set_project()">');
     document.writeln('</SELECT></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
-    document.writeln('<SELECT ID="branch" ONCHANGE="set_branch()">')
+    document.writeln('<SELECT ID="branch" ONCHANGE="set_branch(\"\")">')
     document.writeln('</SELECT>');
     document.writeln('</TD></TR>');
 </SCRIPT>
