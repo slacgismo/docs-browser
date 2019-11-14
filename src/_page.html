@@ -38,20 +38,24 @@
                 var ro = re[Symbol.replace](rr.responseText,to_url);
                 document.writeln(ro);
             }
-            else //if ( rr.status != 404 )
+            else if ( rr.status == 403 )
+            {
+                throw ('GitHub query rate limit exceeded.  Please try again later.');
+            }
+            else
             {                
                 throw ('<FONT COLOR=RED>ERROR ' + rr.status + ' ['+url+'] ' + rr.responseText + '</FONT><BR/>');
             }
-            // MathJax.Hub.Queue(
-            //     ["resetEquationNumbers",MathJax.InputJax.Tex],
-            //     ["PreProcess",MathJax.Hub],
-            //     ["ReProcess",MathJax.Hub]
-            //     );
-            // MathJax.startup.document.state(0);
-            // MathJax.texReset();
-            //MathJax.typeset();
         }
-        else //if ( r.status != 404 )
+        else if ( r.status == 403 )
+        {
+            throw ('GitHub query rate limit exceeded.  Please try again later.');
+        }
+        else if ( r.status == 404 )
+        {
+            throw ('Document not found');
+        }
+        else
         {
             throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
         }
