@@ -6,6 +6,10 @@ A:ACTIVE {
 	color: blue;
 	text-decoration: underline;
 }
+A:BROKEN {
+	color: red;
+	text-decoration: none;
+}
 
 DIV.HEADER {
 	font-size: small;
