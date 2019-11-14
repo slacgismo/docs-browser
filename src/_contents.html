@@ -88,6 +88,7 @@
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs?ref='+branch,false);
         r.send(null);
         contents = "";
+        doclist = []
         if ( r.status == 200 )
         {
             JSON.parse(r.responseText, function (key,value)
@@ -99,9 +100,9 @@
                     contents = contents + (value.substring(0,value.length-3));
                     contents = contents + ('</A>');
                     contents = contents + ('<BR/>')
+                    doclist.push(value);
                 }
             })
-
         }
         else if ( r.status == 404 )
         {
