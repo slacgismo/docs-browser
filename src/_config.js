@@ -12,28 +12,42 @@ if ( year > 2019 )
 }
 var copyright = '<A HREF="https://raw.githubusercontent.com/slacgismo/docs-browser/master/LICENSE" TARGET="_blank">Copyright (C) ' + year + ', Regents of the Leland Stanford Junior University</A>';
 var query = new URLSearchParams(window.location.search);
-var host = query.get('host');
-if ( host == null )
+
+function set_default(cname, cvalue) 
 {
-    host = default_host;
+	document.cookie = cname + "=" + cvalue + ";expires=" + save_default_days + ";path=/";
+	console.info(document.cookie)
 }
-var owner = query.get('owner');
-if ( owner == null )
+
+function get_default(cname,deflt) 
 {
-    owner = default_owner;
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for ( var i = 0 ; i < ca.length ; i++ ) 
+	{
+		var c = ca[i];
+		while ( c.charAt(0) == ' ' ) 
+		{
+			c = c.substring(1);
+		}
+		if ( c.indexOf(name) == 0) 
+		{
+			return c.substring(name.length, c.length);
+		}
+	}
+	var value = query.get(cname);
+	if ( value == null )
+	{
+		return deflt;
+	}
+	else
+	{
+		return value;
+	}
 }
-var project = query.get('project');
-if ( project == null )
-{
-    project = default_project;
-}
-var branch = query.get('branch');
-if ( branch == null )
-{
-    branch = default_branch;
-}
-var doc = query.get('doc');
-if ( doc == null )
-{
-    doc = default_doc;
-}
+
+var host = get_default('host',default_host);
+var owner = get_default('owner',default_owner);
+var project = get_default('project',default_project);
+var branch = get_default('branch',default_branch);
+var doc = get_default('doc',default_doc);

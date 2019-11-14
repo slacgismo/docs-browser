@@ -96,7 +96,7 @@
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
                 {
                     docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                    contents = contents + ('<A HREF="' + docspec + '" TARGET="page">');
+                    contents = contents + ('<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">');
                     contents = contents + (value.substring(0,value.length-3));
                     contents = contents + ('</A>');
                     contents = contents + ('<BR/>')
@@ -117,6 +117,14 @@
             contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
         document.getElementById("contents").innerHTML = contents;
+    }
+    function get_document(doc)
+    {
+        set_default("host",host)
+        set_default("owner",owner);
+        set_default("project",project);
+        set_default("branch",branch);
+        set_default("doc",doc);
     }
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');

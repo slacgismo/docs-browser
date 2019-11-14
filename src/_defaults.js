@@ -16,3 +16,4 @@ default_gethost = "raw.githubusercontent.com"
 
 // configuration of display
 left_panel_width = 300;
+save_default_days = 1;
