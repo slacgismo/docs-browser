@@ -1,6 +1,9 @@
 html {
     font-size: 0.8em;
 }
+body {
+    overflow-x: hidden;
+}
 .footer {
     background-color: #f5f5f5;
     font-size: 0.7em;
