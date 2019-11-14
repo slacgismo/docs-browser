@@ -59,7 +59,6 @@ var main = main || {};
                 listItems += "<a href='#' class='list-group-item list-group-item-action' " +
                     "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>";
 
-
                 // by default we want to load the README.md file
                 if(item.name === 'README.md') {
                     ns.loadMarkdownContent(item);
@@ -139,7 +138,7 @@ var main = main || {};
      * then send it to another api endpoint to convert it into the appropriate
      * markup that we then display on screen.
      */
-    ns.loadMarkdownContent = function(item, host = ns.defaultHost,) {
+    ns.loadMarkdownContent = function(item, host = ns.defaultHost) {
         const contentUrl = item.download_url,
             markdownParserUrl = 'https://api.' + host + '/markdown/raw';
         // get the markdown content
@@ -151,7 +150,6 @@ var main = main || {};
                 contentType: 'text/plain',
                 data: data
             }).done(function(response) {
-                response = ('<p>Source Document: <a href="' + item.html_url + '"target=”_blank”>' + item.html_url + '</a></p>'.concat(response));
                 ns.markdownPanelEl.html(response);
                 ns.typesetMathematicalFormulas();
             }).fail(function(parserErr) {
@@ -162,6 +160,8 @@ var main = main || {};
             // TODO: write error handler
             console.warn(err);
         });
+        $('#source-doc').attr("href",item.html_url);
+        $('#source-doc').empty().append(item.html_url);
     }
 
     /**
