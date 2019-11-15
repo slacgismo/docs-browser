@@ -1,4 +1,4 @@
-# Docs-Browser Defaults
+# Defaults
 
 The following defaults must be specified so that the initial load of the `index.html` document chooses the correct project to start with.
 
@@ -9,3 +9,6 @@ The following defaults must be specified so that the initial load of the `index.
 * `default_doc`: This should be set to the default document (e.g., `README.md`).
 * `default_gethost`: This must be set the hosts URL for getting raw content (e.g., `raw.githubusercontent.com`)
 * `left_panel_width`: This can be changed to modify the width of the left frame.
+
+# See also
+* [[Deploy]]
