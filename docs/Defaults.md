@@ -10,5 +10,9 @@ The following defaults must be specified so that the initial load of the `index.
 * `default_gethost`: This must be set the hosts URL for getting raw content (e.g., `raw.githubusercontent.com`)
 * `left_panel_width`: This can be changed to modify the width of the left frame.
 
+# Cookies
+
+If you have cookies enabled in your browser, then the last page you viewed will be the default for the next 24 hours.
+
 # See also
 * [[Deploy]]
