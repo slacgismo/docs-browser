@@ -76,27 +76,30 @@
                 selector.value = "master";
             }
         }
-        set_branch(null,"");
+        folder = "";
+        set_branch(null);
     }
-    function set_branch(event,path)
+    function set_branch(event)
     {
         host = document.getElementById("host").value;
         owner = document.getElementById("owner").value;
         project = document.getElementById("project").value;
         branch = document.getElementById("branch").value;
-        if ( typeof(path) == "string") 
-        {
-            folder = path;
-        }
-        document.getElementById("contents").innerHTML = get_contents("");
+        document.getElementById("contents").innerHTML = get_contents("","");
     }
-    function get_contents(path)
+    function set_folder(path)
+    {
+        folder = path;
+        document.getElementById("contents").innerHTML = get_contents("","");
+    }
+    function get_contents(path,indent)
     {
         if ( path == "" )
         {
             contents = "";
+            console.info('***');
         }
-        //alert('set_branch("' + folder + '")')
+        console.info("get_contents('" + path + "','" + indent + "'); folder = '" + folder + "';");
         var r = new XMLHttpRequest();
         r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs' + path + '?ref='+branch,false);
         r.send(null);
@@ -104,7 +107,7 @@
         {
             JSON.parse(r.responseText, function (key,value)
             {
-                if ( key == 'name' )
+                if ( key == 'name' && value != folder )
                 {
                     try 
                     { 
@@ -120,14 +123,17 @@
                     }
                     if ( ext === "" && value.substring(0,1) != '_' )
                     {
-                        docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                        contents += '<B><A REL="nofollow" ONCLICK="set_branch(\'/' + value + '\')">';
-                        contents += value;
-                        contents += '/</A></B>';
-                        contents += '<BR/>';
-                        if ( value === folder )
+                        subitem = path + '/'+ value;
+                        console.info('subitem = ' + subitem + '; folder = ' + folder);
+                            docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
+                        if ( subitem != folder )
                         {
-                            contents += get_contents(value);
+                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '/</A></B>'+ '<BR/>';
+                        }
+                        else
+                        {
+                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '/</A></B>'+ '<BR/>';
+                            return get_contents(subitem,indent+"&nbsp;");
                         }
                     }
                 }
@@ -137,7 +143,7 @@
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
                 {
                     docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                    contents += '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">';
+                    contents += indent + '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path.substring(1) + '/'+ value + '\')">';
                     contents += value.substring(0,value.length-3);
                     contents +='</A>';
                     contents += '<BR/>';
@@ -156,6 +162,7 @@
         {
             contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
+        console.info("  --> " + contents)
         return contents;
     }
     function get_document(doc)
@@ -168,15 +175,14 @@
     }
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
-    document.writeln('<TR><TH ALIGN=LEFT>Host</TH><TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH><TD><INPUT ID="owner" NAME="owner" ONBLUR="set_owner(null)" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>Project</TH><TD>')
-    document.writeln('<SELECT ID="project" ONCHANGE="set_project()">');
-    document.writeln('</SELECT></TD></TR>');
-    document.writeln('<TR><TH ALIGN=LEFT>Branch</TH><TD>');
-    document.writeln('<SELECT ID="branch" ONCHANGE="set_branch(\"\")">')
-    document.writeln('</SELECT>');
-    document.writeln('</TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Host</TH>');
+    document.writeln('<TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH>');
+    document.writeln('<TD><INPUT ID="owner" NAME="owner" ONBLUR="set_owner(null)" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Project</TH>')
+    document.writeln('<TD><SELECT ID="project" ONCHANGE="set_project(event)"></SELECT></TD></TR>');
+    document.writeln('<TR><TH ALIGN=LEFT>Branch</TH>');
+    document.writeln('<TD><SELECT ID="branch" ONCHANGE="set_branch(event)"></SELECT></TD></TR>');
 </SCRIPT>
 </TABLE>
 

@@ -28,7 +28,7 @@
             rr.send(r.responseText);
             if ( rr.status == 200 )
             {
-                var re = /\[\[[-A-Za-z_ 0-9]+\]\]/g;
+                var re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
                     tag = tag.substr(2,tag.length-4);
