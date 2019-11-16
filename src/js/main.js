@@ -160,8 +160,8 @@ var main = main || {};
             // TODO: write error handler
             console.warn(err);
         });
-        $('#source-doc').attr("href",item.html_url);
-        $('#source-doc').empty().append(item.html_url);
+        $('#source-doc').attr("href", item.html_url);
+        $('#source-doc').text(item.html_url);
     }
 
     /**
