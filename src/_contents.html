@@ -128,11 +128,11 @@
                             docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
                         if ( subitem != folder )
                         {
-                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '/</A></B>'+ '<BR/>';
+                            contents += indent + '<A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '&#x25BD;' + '</A>'+ '<BR/>';
                         }
                         else
                         {
-                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '/</A></B>'+ '<BR/>';
+                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '&#x25B3;' + '</A></B>'+ '<BR/>';
                             return get_contents(subitem,indent+"&nbsp;");
                         }
                     }
