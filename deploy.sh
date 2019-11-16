@@ -2,7 +2,7 @@
 
 function syntax()
 {
-    echo "Syntax: $(basename $0) src [localhost|buckets] ..."
+    echo "Syntax: $(basename $0) src [localhost|buckets ...]"
 }
 
 if [ $# -lt 1 ]; then
@@ -17,8 +17,7 @@ elif [ ! -d "$1" ]; then
 fi
 
 if [ "$2" == "localhost" ]; then
-    cd $1
-    python3 -m http.server 1>http-server.log 2>&1 &
+    (cd $1 ; python3 -m http.server) 1>http-server.log 2>&1 &
     open http://localhost:8000/index.html
 else
     cd $1
@@ -31,10 +30,12 @@ else
         for file in $(ls) ; do
             if [ -f "$file" ]; then
                 target="s3://$1/$file"
-                if [ -z "$(grep ^$file .deploy-once)" -o -z "$(aws s3 ls $target)" ]; then
+                if [ -z "$(grep ^$file .deploy-once)" -o -z "$(aws s3 ls $1/$file)" ]; then
                     # echo $file
                     aws s3 cp "$file" "$target"
-                    aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read 
+                    aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read
+                else
+                    echo "once  : ./$file to $target"
                 fi
             fi
         done
