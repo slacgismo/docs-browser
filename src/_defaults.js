@@ -8,12 +8,12 @@
 
 // configuration of repo docs
 default_host = "github.com";
-default_owner = "slacgismo";
-default_project = "docs-browser";
-default_branch = "master";
-default_doc = "README.md";
-default_gethost = "raw.githubusercontent.com"
+default_owner = "dchassin";
+default_project = "gridlabd";
+default_branch = "develop";
+default_doc = "/README.md";
+default_gethost = "raw.githubusercontent.com";
 
 // configuration of display
-left_panel_width = 300;
-save_default_days = 1;
+left_panel_width = 300; // how wide the TOC panel is (in pixel)
+save_default_days = 1; // how long a cookie will be retained (in days)

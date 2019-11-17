@@ -25,14 +25,21 @@
         {
             var rr = new XMLHttpRequest();
             rr.open('POST','https://api.'+host+'/markdown/raw',false);
+            if ( github_authorization_token != null )
+            {
+                rr.setRequestHeader("Authorization","token " + github_authorization_token);
+            }
             rr.send(r.responseText);
             if ( rr.status == 200 )
             {
                 var re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
-                    tag = tag.substr(2,tag.length-4);
-                    ref = (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
+                    tag = tag.substr(2,tag.length-4).trim();
+                    if ( tag.charAt(0) == '/' )
+                        ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2)).replace(' ','-');
+                    else
+                        ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
                     return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
                 }
                 var ro = re[Symbol.replace](rr.responseText,to_url);
@@ -40,7 +47,7 @@
             }
             else if ( rr.status == 403 )
             {
-                throw ('GitHub query rate limit exceeded.  Please try again later.');
+                throw ('Unauthenticated access rate limited.');
             }
             else
             {                
@@ -49,11 +56,11 @@
         }
         else if ( r.status == 403 )
         {
-            throw ('GitHub query rate limit exceeded.  Please try again later.');
+            throw ('Unauthenticated access rate limited.');
         }
         else if ( r.status == 404 )
         {
-            throw ('Document not found');
+            throw ('Document not found.');
         }
         else
         {
@@ -70,12 +77,12 @@
     var href = location.origin + location.pathname.substring(0,location.pathname.lastIndexOf('/')+1);
     // TODO: The replacement of <name>.com -> raw.<name>usercontent.com is probably not general, but works for github.com.
     //       Suggest using a config.js on the host to implement this translation.
-    var base = 'https://' + default_gethost + '/' + owner + '/' + project + '/' + branch + '/docs/';
+    var base = 'https://' + default_gethost + '/' + owner + '/' + project + '/' + branch + '/docs';
 </SCRIPT>
 
 Source document:
 <SCRIPT LANGUAGE="JavaScript">
-    url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs/' + doc;
+    url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
     document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + url + '</A>');
 </SCRIPT>
 
@@ -83,7 +90,7 @@ Source document:
     document.writeln('<DIV ID="header" CLASS="header">')
     try 
     { 
-        load_markdown(base+'_header.md') ;
+        load_markdown(base+'/_header.md') ;
     } 
     catch (e) 
     {
@@ -102,11 +109,11 @@ Source document:
     document.writeln('<DIV ID="footer" CLASS="footer">')
     try 
     { 
-        load_markdown(base+'_footer.md') 
+        load_markdown(base+'/_footer.md') 
     } 
     catch (e) 
     {
-        load_markdown(base.replace('/docs','')+'COPYRIGHT') 
+        load_markdown(base.replace('/docs','')+'/COPYRIGHT') 
     }
     document.writeln('</DIV>');
 </SCRIPT>

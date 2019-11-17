@@ -9,6 +9,24 @@
 
 <TABLE WIDTH="100%">
 <SCRIPT LANGUAGE="JavaScript">
+    function run_query(query)
+    {
+        console.info("Running query '" + query + "'...")
+        var r = new XMLHttpRequest();
+        r.open('GET',query,false);
+        if ( github_authorization_token != null )
+        {
+            console.info("API authorization token: ",github_authorization_token);
+            r.setRequestHeader("Authorization","token " + github_authorization_token);
+        }
+        r.send(null);
+        console.info("  status -> " + r.status);
+        return r;
+    }
+    function reload_frameset()
+    {
+        top.frames.document.location.href=top.frames.document.location.href;
+    }
     function set_owner(event)
     {
         if ( event == null || event.key === 'Enter' )
@@ -20,9 +38,7 @@
             }
             host = document.getElementById("host").value;
             owner = document.getElementById("owner").value;
-            var r = new XMLHttpRequest();
-            r.open('GET','https://api.'+host+'/users/'+owner+'/repos?per_page=100',false);
-            r.send(null);
+            r = run_query('https://api.'+host+'/users/'+owner+'/repos?per_page=100');
             if ( r.status == 200 )
             {
                 JSON.parse(r.responseText, function (key,value)
@@ -55,9 +71,7 @@
         host = document.getElementById("host").value;
         owner = document.getElementById("owner").value;
         project = document.getElementById("project").value;
-        var r = new XMLHttpRequest();
-        r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100',false);
-        r.send(null);
+        var r = run_query('https://api.'+host+'/repos/'+owner+'/'+project+'/branches?per_page=100');
         if ( r.status == 200 )
         {
             JSON.parse(r.responseText, function (key,value)
@@ -76,7 +90,6 @@
                 selector.value = "master";
             }
         }
-        folder = "";
         set_branch(null);
     }
     function set_branch(event)
@@ -89,25 +102,23 @@
     }
     function set_folder(path)
     {
+        console.info('*** set_folder("' + path + '")');
         folder = path;
         document.getElementById("contents").innerHTML = get_contents("","");
     }
     function get_contents(path,indent)
     {
+        console.info('get_contents(path="' + path + '"); folder = "' + folder +'";');
         if ( path == "" )
         {
             contents = "";
-            console.info('***');
         }
-        console.info("get_contents('" + path + "','" + indent + "'); folder = '" + folder + "';");
-        var r = new XMLHttpRequest();
-        r.open('GET','https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs' + path + '?ref='+branch,false);
-        r.send(null);
+        var r = run_query('https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs' + path + '?ref='+branch);
         if ( r.status == 200 )
         {
             JSON.parse(r.responseText, function (key,value)
             {
-                if ( key == 'name' && value != folder )
+                if ( key == 'name' )
                 {
                     try 
                     { 
@@ -124,16 +135,14 @@
                     if ( ext === "" && value.substring(0,1) != '_' )
                     {
                         subitem = path + '/'+ value;
-                        console.info('subitem = ' + subitem + '; folder = ' + folder);
-                            docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                        if ( subitem != folder )
+                        if ( path+"/"+value != folder  )
                         {
                             contents += indent + '<A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '&#x25BD;' + '</A>'+ '<BR/>';
                         }
                         else
                         {
                             contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '&#x25B3;' + '</A></B>'+ '<BR/>';
-                            return get_contents(subitem,indent+"&nbsp;");
+                            return get_contents(subitem,indent+"&nbsp;&nbsp;&bullet;&nbsp;");
                         }
                     }
                 }
@@ -142,41 +151,75 @@
             {
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
                 {
-                    docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + value;
-                    contents += indent + '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path.substring(1) + '/'+ value + '\')">';
-                    contents += value.substring(0,value.length-3);
-                    contents +='</A>';
+                    docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&folder=" + path + "&doc=" + path + '/' + value;
+                    if ( path + "/" + value === doc )
+                        contents += "<B>";
+                    contents += indent + '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>';
+                    if ( path + "/" + value === doc )
+                        contents += "</B>";
                     contents += '<BR/>';
                 }
             });
         }
+        else if ( r.status == 401 )
+        {
+            if ( github_authorization_token != null )
+            {
+                github_authorization_token = null;
+                set_default("token",github_authorization_token);
+                reload_frameset();
+            }
+        }
         else if ( r.status == 404 )
         {
-            contents = "No documents listed";
+            contents = "No documents listed.";
         }
         else if ( r.status == 403 )
         {
-            contents = "Access rate limited";
+            contents = "Unauthenticated access rate limited.";
         }
         else
         {
             contents = contents + ("ERROR " + r.status + ": " + r.responseText);
         }
-        console.info("  --> " + contents)
         return contents;
     }
-    function get_document(doc)
+    function get_document(item)
     {
-        set_default("host",host)
-        set_default("owner",owner);
-        set_default("project",project);
-        set_default("branch",branch);
-        set_default("doc",doc);
+        console.info("get_document(item='" + item + "')")
+        doc = item;
+        save_defaults();
+        document.getElementById("contents").innerHTML = get_contents("","");
+    }
+    function set_authorization(event)
+    {
+        set_default("token",document.getElementById("token").value);
+    }
+    function get_authorization()
+    {
+        if ( github_authorization_token == null )
+        {
+            token = prompt("You may increase your access rate by using a personal GitHub authorization token.\nSee https://github.com/settings/tokens for details.\n\nEnter github access token:","");
+            if ( token != null )
+            {
+                github_authorization_token = token;
+            }
+        }
+        else
+        {
+            github_authorization_token = null;
+        }
+        set_default("token",github_authorization_token);
+        reload_frameset();
     }
     document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH>');
-    document.writeln('<TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /></TD></TR>');
+    if ( github_authorization_token == null )
+        login = "Login";
+    else
+        login = "Logout";
+    document.writeln('<TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /><INPUT TYPE="submit" ONCLICK="get_authorization()" VALUE="' + login + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH>');
     document.writeln('<TD><INPUT ID="owner" NAME="owner" ONBLUR="set_owner(null)" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Project</TH>')
