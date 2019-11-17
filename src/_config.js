@@ -28,13 +28,13 @@ function set_default(name, value)
 
 function get_default(name,deflt,asnull) 
 {
-	console.info("get_default('" + name + "',value='" + deflt + "')...");
+	// console.info("get_default('" + name + "',value='" + deflt + "')...");
 	var value = query.get(name);
 	var type = 'query';
 	if ( value == null )
 	{
 		var ca = document.cookie.split(';');
-		console.info("  cookie = " + ca);
+		// console.info("  cookie = " + ca);
 		for ( var i = 0 ; i < ca.length ; i++ ) 
 		{
 			var c = ca[i].trim();
@@ -55,7 +55,7 @@ function get_default(name,deflt,asnull)
 		value = null;
 		type += ' asnull'
 	}
-	console.info("  " + type + " --> " + name + " = '" + deflt + "'");
+	// console.info("  " + type + " --> " + name + " = '" + deflt + "'");
 	return value;
 }
 

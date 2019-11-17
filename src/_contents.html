@@ -11,16 +11,16 @@
 <SCRIPT LANGUAGE="JavaScript">
     function run_query(query)
     {
-        console.info("Running query '" + query + "'...")
+        // console.info("Running query '" + query + "'...")
         var r = new XMLHttpRequest();
         r.open('GET',query,false);
         if ( github_authorization_token != null )
         {
-            console.info("API authorization token: ",github_authorization_token);
+            // console.info("API authorization token: ",github_authorization_token);
             r.setRequestHeader("Authorization","token " + github_authorization_token);
         }
         r.send(null);
-        console.info("  status -> " + r.status);
+        // console.info("  status -> " + r.status);
         return r;
     }
     function reload_frameset()
@@ -102,13 +102,13 @@
     }
     function set_folder(path)
     {
-        console.info('*** set_folder("' + path + '")');
+        // console.info('*** set_folder("' + path + '")');
         folder = path;
         document.getElementById("contents").innerHTML = get_contents("","");
     }
     function get_contents(path,indent)
     {
-        console.info('get_contents(path="' + path + '"); folder = "' + folder +'";');
+        // console.info('get_contents(path="' + path + '"); folder = "' + folder +'";');
         if ( path == "" )
         {
             contents = "";
@@ -186,7 +186,7 @@
     }
     function get_document(item)
     {
-        console.info("get_document(item='" + item + "')")
+        // console.info("get_document(item='" + item + "')")
         doc = item;
         save_defaults();
         document.getElementById("contents").innerHTML = get_contents("","");
