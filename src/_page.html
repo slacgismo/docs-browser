@@ -66,7 +66,58 @@
         {
             throw ('<FONT COLOR=RED>ERROR ' + r.status + ' ['+url+'] ' + r.responseText + '</FONT><BR/>');
         }
-    }    
+    }
+    function set_search(event)
+    {
+        if ( event == null || event.key == 'Enter' )
+        {
+            search = document.getElementById("search").value;
+            console.info('search = "' + search + '";')
+            if ( search != "" )
+            {
+                function show_results(key,value)
+                {
+                    if ( key == 'total_count' )
+                    {
+                        content += value + ' items found in master branch.<BR/>The following documents were found<BR/>';
+                    }
+                    else if ( key == 'path' && value.indexOf('docs/') == 0 && value.endsWith('.md') )
+                    {
+                        docspec = href + "_page.html?branch=master&doc=/" + value.substring(5);
+                        content += '&bullet;&nbsp;<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">' + value.substring(5) + '</A><BR/>';
+                        //http://localhost:8000/_page.html?owner=slacgismo&project=gridlabd&branch=master&folder=&doc=/Python.md
+                        // '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>'
+                    }
+                }
+                content = ""
+
+                // filename search
+                query = run_query('https://api.' + host + '/search/code?q=filename:' + search + '+path:/docs+extension:md+repo:' + owner + '/' + project);
+                if ( query.status == 200 )
+                {
+                    content += "<P/><B>Search result for file names matching '" + search + "'</B>: ";
+                    JSON.parse(query.responseText,show_results);                 
+                }
+                else
+                {
+                    content += 'Search for "' + search + '" failed: status ' + query.status + '<BR/>' + query.responseText;
+                }
+
+                // content search
+                query = run_query('https://api.' + host + '/search/code?q=' + search + '+path:/docs+extension:md+repo:' + owner + '/' + project);
+                if ( query.status == 200 )
+                {
+                    content += "<P/><B>Search result for files containing '" + search + "'</B>: ";
+                    JSON.parse(query.responseText,show_results);                 
+                }
+                else
+                {
+                    content += 'Search for "' + search + '" failed: status ' + query.status + '<BR/>' + query.responseText;
+                }
+                document.getElementById("page").innerHTML = content;
+            }
+        }
+    }
 </SCRIPT>
 </HEAD>
 
@@ -80,11 +131,24 @@
     var base = 'https://' + default_gethost + '/' + owner + '/' + project + '/' + branch + '/docs';
 </SCRIPT>
 
-Source document:
-<SCRIPT LANGUAGE="JavaScript">
-    url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
-    document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + url + '</A>');
-</SCRIPT>
+<TABLE WIDTH="100%">
+<TR><TH ALIGN="left">Document:</TH>
+    <TD>
+        <SCRIPT LANGUAGE="JavaScript">
+            url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
+            document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + url + '</A>');
+        </SCRIPT>
+    </TD>
+    <TH ALIGN="right">
+        Search:
+    </TH>
+    <TD>
+        <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
+        <INPUT TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
+    </TD>
+</TR>
+</TABLE>
+
 
 <SCRIPT LANGUAGE="JavaScript">
     document.writeln('<DIV ID="header" CLASS="header">')

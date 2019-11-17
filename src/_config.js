@@ -76,3 +76,22 @@ function save_defaults()
     set_default("folder",folder);
     set_default("doc",doc);
 }
+
+function run_query(query)
+{
+    // console.info("Running query '" + query + "'...")
+    var r = new XMLHttpRequest();
+    r.open('GET',query,false);
+    if ( github_authorization_token != null )
+    {
+        // console.info("API authorization token: ",github_authorization_token);
+        r.setRequestHeader("Authorization","token " + github_authorization_token);
+    }
+    r.send(null);
+    // console.info("  status -> " + r.status);
+    return r;
+}
+function reload_frameset()
+{
+    top.frames.document.location.href=top.frames.document.location.href;
+}
