@@ -1,3 +1,9 @@
+BODY.CONTENTS {
+    background-color: #f4f4f4;
+}
+BODY.PAGE {
+    background-color: #f4f4f4;
+}
 A:LINK,A:VISITED {
 	color: blue;
 	text-decoration: none;
@@ -19,13 +25,15 @@ DIV.FOOTER {
 }
 
 DIV.PAGE {
+    background-color: white;
     border: 1px solid lightgrey;
     padding: 20px;
     border-radius: 10px;
 }
 
 DIV.CONTENTS {
-    border: 1px solid lightgrey;
+    background-color: white;
+    border: 1px solid grey;
     padding: 20px;
     border-radius: 10px;
 }

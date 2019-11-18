@@ -5,7 +5,7 @@
 <SCRIPT LANGUAGE="Javascript" SRC="_config.js"></SCRIPT>
 </HEAD>
 
-<BODY ONLOAD="set_owner(null)">
+<BODY ONLOAD="set_owner(null)" CLASS="contents">
 
 <TABLE WIDTH="100%">
 <SCRIPT LANGUAGE="JavaScript">
@@ -98,6 +98,7 @@
         var r = run_query('https://api.'+host+'/repos/'+owner+'/'+project+'/contents/docs' + path + '?ref='+branch);
         if ( r.status == 200 )
         {
+            // display folders
             JSON.parse(r.responseText, function (key,value)
             {
                 if ( key == 'name' )
@@ -117,18 +118,25 @@
                     if ( ext === "" && value.substring(0,1) != '_' )
                     {
                         subitem = path + '/'+ value;
-                        if ( path+"/"+value != folder  )
+                        // console.info("  subitem = '" + subitem + "'; folder = '" + folder + "'; match = " + (folder==subitem));
+
+                        // display folder name only
+                        if ( folder.indexOf(subitem) != 0 )
                         {
                             contents += indent + '<A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '&#x25BD;' + '</A>'+ '<BR/>';
                         }
+
+                        // display folder contents
                         else
                         {
                             contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '&#x25B3;' + '</A></B>'+ '<BR/>';
-                            return get_contents(subitem,indent+"&nbsp;&nbsp;&bullet;&nbsp;");
+                            return get_contents(subitem,indent+"&nbsp;&nbsp;&nbsp;");
                         }
                     }
                 }
             });
+
+            // display documents
             JSON.parse(r.responseText, function (key,value)
             {
                 if ( key == 'name' && value.endsWith('.md') && value.substring(0,1) != '_' )
