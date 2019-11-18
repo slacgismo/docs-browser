@@ -1,6 +1,9 @@
 html {
     font-size: 0.8em;
 }
+body {
+    overflow-x: hidden;
+}
 .footer {
     background-color: #f5f5f5;
     font-size: 0.7em;
@@ -17,4 +20,11 @@ html {
 }
 #list-of-docs {
     text-align: left;
+}
+.navbar {
+    background-color: #5c5c5c;
+}
+.navbar-logo {
+    height: 50px;
+    padding: 0 0 0 0;
 }

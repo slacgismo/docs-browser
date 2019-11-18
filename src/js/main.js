@@ -1,5 +1,5 @@
 // establish the main namespace - gets loaded with index.html
-var main = main || {}; 
+var main = main || {};
 
 (function(ns) {
     /**
@@ -46,12 +46,12 @@ var main = main || {};
      * Request data to load as content from the given resource.
      * We assume github style structure and params
      */
-    ns.getContent = function(host = ns.defaultHost, 
-                             owner = ns.defaultOwner, 
-                             project = ns.defaultProject, 
+    ns.getContent = function(host = ns.defaultHost,
+                             owner = ns.defaultOwner,
+                             project = ns.defaultProject,
                              branch = ns.defaultBranch) {
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/contents/docs?ref=' + branch;
-        
+
         $.get(url).done(function(data) {
             let listItems = '';
             let readmeLoaded = false;
@@ -72,7 +72,7 @@ var main = main || {};
                 ns.loadMarkdownContent(data[0].item);
             }
         }).fail(function(err) {
-            // TODO: create error handler 
+            // TODO: create error handler
             console.warn('error', err)
         });
     }
@@ -105,21 +105,21 @@ var main = main || {};
     /**
      * Retrieve branch information for the given project and update
      * the select/options with the data returned.
-     * 
+     *
      * Whenever this is called we assume we should default to master
      */
-    ns.getBranchInformation = function(host = ns.defaultHost, 
-                                       owner = ns.defaultOwner, 
+    ns.getBranchInformation = function(host = ns.defaultHost,
+                                       owner = ns.defaultOwner,
                                        project = ns.defaultProject) {
         const url = 'https://api.' + host + '/repos/' + owner + '/' + project + '/branches?per_page=1000';
 
-        $.get(url).done(function(data) {            
+        $.get(url).done(function(data) {
             // build the options from the response
             var selectOptions = data.reduce(function(acc, currentVal, idx) {
-                var curOpt = '<option value="' + currentVal.name + '" ' + (currentVal.name === ns.defaultBranch ? 'selected' : '') + '>' + 
+                var curOpt = '<option value="' + currentVal.name + '" ' + (currentVal.name === ns.defaultBranch ? 'selected' : '') + '>' +
                     currentVal.name + '</option>';
                 if(idx === 1) {
-                    return '<option value="' + acc.name + '" ' + (acc.name === ns.defaultBranch ? 'selected' : '') + '>' + 
+                    return '<option value="' + acc.name + '" ' + (acc.name === ns.defaultBranch ? 'selected' : '') + '>' +
                         acc.name + '</option>' + curOpt;
                 }
                 return acc + curOpt;
@@ -141,7 +141,6 @@ var main = main || {};
     ns.loadMarkdownContent = function(item, host = ns.defaultHost) {
         const contentUrl = item.download_url,
             markdownParserUrl = 'https://api.' + host + '/markdown/raw';
-
         // get the markdown content
         $.get(contentUrl).done(function(data) {
             // parse the markdown response
@@ -150,7 +149,7 @@ var main = main || {};
                 method: 'POST',
                 contentType: 'text/plain',
                 data: data
-            }).done(function(response) {                
+            }).done(function(response) {
                 ns.markdownPanelEl.html(response);
                 ns.typesetMathematicalFormulas();
             }).fail(function(parserErr) {
@@ -161,6 +160,8 @@ var main = main || {};
             // TODO: write error handler
             console.warn(err);
         });
+        $('#source-doc').attr("href", item.html_url);
+        $('#source-doc').text(item.html_url);
     }
 
     /**
