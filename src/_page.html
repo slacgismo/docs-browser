@@ -144,13 +144,18 @@
     </TH>
     <TD>
         <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
-        <INPUT TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
+        <INPUT ID="submit" TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
     </TD>
 </TR>
 </TABLE>
 
 
 <SCRIPT LANGUAGE="JavaScript">
+    if ( github_authorization_token == null )
+    {
+        document.getElementById("search").disabled = true;
+        document.getElementById("submit").disabled = true;
+    }
     document.writeln('<DIV ID="header" CLASS="header">')
     try 
     { 
