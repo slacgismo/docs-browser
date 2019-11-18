@@ -23,7 +23,7 @@ fi
 
 cd $1
 if [ "$2" == "localhost" ]; then
-    python3 -m http.server 1>http-server.log 2>&1 &
+    python3 -m http.server 1>http-server.log &
     open http://localhost:8000/index.html
 else
     if [ -z "$(ls)" ]; then
