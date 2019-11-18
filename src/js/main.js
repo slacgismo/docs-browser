@@ -15,7 +15,8 @@ var main = main || {};
         ns.defaultOwner = 'slacgismo';
         ns.defaultProject = 'docs-browser';
         ns.defaultBranch = 'master';
-        ns.defaultDoc = 'README.md';
+        ns.defaultDocument = 'README.md';
+        ns.defaultFolder = '';
         ns.defaultGetHost = 'raw.githubusercontent.com';
 
         // get our dom elements
@@ -27,19 +28,44 @@ var main = main || {};
         ns.listOfDocsEl = $('#list-of-docs');
         ns.markdownPanelEl = $('#markdown-panel');
 
-        ns.setDefaults();           // assign our defaults to the DOM
-        ns.setupListeners();        // attach event listeners to our DOM
+        ns.parseQueryStringParams();        
+        ns.setDefaults(ns.defaultHost, ns.defaultOwner, ns.defaultProject);        
+        ns.setupListeners();
         ns.getBranchInformation();
         ns.getContent();
     }
 
     /**
+     * Get the url and determine whether there are query string params
+     * First we strip anything before a ? if present. If not present
+     * we use the defaults. Otherwise we attempt to use what is given to perform
+     * the initial load of the project.
+     */
+    ns.parseQueryStringParams = function() {
+        const idxOfQsMarker = window.location.href.indexOf('?');
+        if(~idxOfQsMarker) {
+            // parse the query string params using qs
+            // URLSearchParams has no IE support unfortunately
+            const queryStringParams = Qs.parse(window.location.href.substring(idxOfQsMarker + 1))
+            // we assume query string params to have the appropriate keys
+            ns.defaultOwner = queryStringParams['owner'] || ns.defaultOwner
+            ns.defaultProject = queryStringParams['project'] || ns.defaultProject
+            ns.defaultBranch = queryStringParams['branch'] || ns.defaultBranch
+            
+            // currently unsupported 👇
+            ns.defaultFolder = queryStringParams['folder'] || ns.defaultFolder
+            ns.defaultDocument = queryStringParams['document'] || ns.defaultDocument
+            ns.defaultHost = queryStringParams['host'] || ns.defaultHost            
+        }
+    }
+
+    /**
      * Set the defaults for the dom elements we care about
      */
-    ns.setDefaults = function() {
-        ns.hostInputEl.val(ns.defaultHost);
-        ns.userOrgInputEl.val(ns.defaultOwner);
-        ns.projectInputEl.val(ns.defaultProject);
+    ns.setDefaults = function(host, owner, project) {
+        ns.hostInputEl.val(host);
+        ns.userOrgInputEl.val(owner);
+        ns.projectInputEl.val(project);
     }
 
     /**
