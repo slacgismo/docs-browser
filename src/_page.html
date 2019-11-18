@@ -133,17 +133,14 @@
 
 <DIV CLASS="TOPBLOCK">
 <TABLE WIDTH="100%" CLASS="page">
-<TR><TH ALIGN="left">Document:</TH>
-    <TD>
+<TR><TD ALIGN="left">Document:
         <SCRIPT LANGUAGE="JavaScript">
             url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
-            document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + url + '</A>');
+            document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + doc + '</A>');
         </SCRIPT>
     </TD>
-    <TH ALIGN="right" ID="label">
+    <TD ALIGN="right" ID="label">
         Search:
-    </TH>
-    <TD>
         <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
         <INPUT ID="submit" TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
     </TD>
