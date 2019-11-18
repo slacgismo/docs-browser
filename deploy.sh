@@ -21,11 +21,11 @@ if [ ! -d "$1" ]; then
     exit 2
 fi
 
+cd $1
 if [ "$2" == "localhost" ]; then
-    (cd $1 ; python3 -m http.server) 1>http-server.log 2>&1 &
+    python3 -m http.server 1>http-server.log 2>&1 &
     open http://localhost:8000/index.html
 else
-    cd $1
     if [ -z "$(ls)" ]; then
         echo "ERROR: no files to deploy in $1" > /dev/stderr
         exit 3
