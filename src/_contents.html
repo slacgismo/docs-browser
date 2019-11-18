@@ -181,7 +181,14 @@
     {
         if ( github_authorization_token == null )
         {
-            token = prompt("You may increase your access rate by using a personal GitHub authorization token.\nSee https://github.com/settings/tokens for details.\n\nEnter github access token:","");
+            key = "";
+            try {
+                auth = run_query(location.origin+"/_auth.key");
+                if ( auth.status == 200 )
+                    key = auth.responseText;
+            }
+            catch {}
+            token = prompt("You may increase your access rate by using a personal GitHub authorization token.\nSee https://github.com/settings/tokens for details.\n\nEnter github access token:",key);
             if ( token != null )
             {
                 github_authorization_token = token;
