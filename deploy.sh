@@ -2,7 +2,7 @@
 
 function syntax()
 {
-    echo "Syntax: $(basename $0) [-f|--force] src [localhost|buckets ...]"
+    echo "Syntax: $(basename $0) [-f|--force-always] src [localhost|buckets ...]"
 }
 
 if [ $# -lt 1 ]; then
@@ -30,15 +30,22 @@ else
         echo "ERROR: no files to deploy in $1" > /dev/stderr
         exit 3
     fi
+    if [ ! -f ".deploy" ]; then
+        echo "ERROR: $(basename $0) cannot find '.deploy' file in '%s'" > /dev/stderr
+        exit 4
+    fi
     shift 1
     while [ $# -ge 1 ]; do
         for file in $(ls) ; do
-            if [ -f "$file" -a -z "$(grep ^$file .deploy-ignore 2>/dev/null)" ]; then
+            if [ -f "$file" ]; then
+                DISPOSITION=$(grep "^$file:" .deploy | cut -f2 -d:)
+                if [ -z "$DISPOSITION" ]; then
+                    continue;
+                fi
                 target="s3://$1/$file"
-                if [ "${FORCE:-no}" == "yes" -o -z "$(grep ^$file .deploy-once)" -o -z "$(aws s3 ls $1/$file)" ]; then
-                    # echo $file
-                    aws s3 cp "$file" "$target"
-                    aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read
+                if [ "$DISPOSITION" != "missing" -o "${FORCE:-no}" == "yes" -o -z "$(aws s3 ls $1/$file)" ]; then
+                    $ACTION aws s3 cp "$file" "$target"
+                    $ACTION aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read
                 else
                     echo "skipped: ./$file to $target"
                 fi
