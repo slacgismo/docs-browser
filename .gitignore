@@ -2,3 +2,4 @@
 src/_defaults.js
 src/http-server.log
 src/authkey.js
+src/_auth.key
