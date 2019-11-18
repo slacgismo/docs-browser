@@ -24,6 +24,9 @@ DIV.FOOTER {
 	font-size: small;
 }
 
+DIV.TOPBLOCK {
+    border: 1px solid lightgrey;
+}
 DIV.PAGE {
     background-color: white;
     border: 1px solid lightgrey;
