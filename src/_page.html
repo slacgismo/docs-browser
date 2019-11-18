@@ -143,7 +143,7 @@
         Search:
     </TH>
     <TD>
-        <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
+        <INPUT ID="search" NAME="search" VALUE="" ONFOCUS="check_search(event)" ONKEYDOWN="set_search(event)" />
         <INPUT ID="submit" TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
     </TD>
 </TR>
@@ -151,6 +151,11 @@
 
 
 <SCRIPT LANGUAGE="JavaScript">
+    function check_focus(event)
+    {
+        if ( github_authorization_token == null )
+            alert("Login to use search");
+    }
     if ( github_authorization_token == null )
     {
         document.getElementById("search").disabled = true;
