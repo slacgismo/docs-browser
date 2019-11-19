@@ -72,7 +72,7 @@ var main = main || {};
                 ns.loadMarkdownContent(data[0].item);
             }
         }).fail(function(err) {
-            // TODO: create error handler
+            // TODO: write error handler
             console.warn('error', err)
         });
     }
@@ -127,7 +127,8 @@ var main = main || {};
             // attach the generated options to the dom
             ns.selectOptionEl.html(selectOptions);
         }).fail(function(err) {
-            // TODO: create error handler
+            $('.toast').attr('style','');
+            $('.toast').toast('show');
             console.warn('error', err);
         });
     }
