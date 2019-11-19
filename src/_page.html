@@ -32,7 +32,10 @@
             rr.send(r.responseText);
             if ( rr.status == 200 )
             {
-                var re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
+                var re = /<a href="/g;
+                r0 = re[Symbol.replace](rr.responseText,'<a target="_new" href="');
+
+                re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
                     tag = tag.substr(2,tag.length-4).trim();
@@ -42,8 +45,8 @@
                         ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
                     return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
                 }
-                var ro = re[Symbol.replace](rr.responseText,to_url);
-                document.writeln(ro);
+                var r1 = re[Symbol.replace](r0,to_url);
+                document.writeln(r1);
             }
             else if ( rr.status == 403 )
             {
@@ -85,8 +88,6 @@
                     {
                         docspec = href + "_page.html?branch=master&doc=/" + value.substring(5);
                         content += '&bullet;&nbsp;<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">' + value.substring(5) + '</A><BR/>';
-                        //http://localhost:8000/_page.html?owner=slacgismo&project=gridlabd&branch=master&folder=&doc=/Python.md
-                        // '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>'
                     }
                 }
                 content = ""
