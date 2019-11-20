@@ -131,7 +131,7 @@
                         else
                         {
                             contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')"><SMALL>&#x25B3;&nbsp;</SMALL>'+ value + '</A></B>'+ '<BR/>';
-                            return get_contents(subitem,indent+"&nbsp;&nbsp;&nbsp;");
+                            return get_contents(subitem,indent+"&nbsp;&nbsp;&nbsp;&nbsp;");
                         }
                     }
                 }
@@ -145,7 +145,7 @@
                     docspec = href + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&folder=" + path + "&doc=" + path + '/' + value;
                     if ( path + "/" + value === doc )
                         contents += "<B>";
-                    contents += indent + '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>';
+                    contents += indent + '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + /[^A-Za-z0-9-]/g[Symbol.replace](value.substring(0,value.length-3),'&nbsp;') + '</A>';
                     if ( path + "/" + value === doc )
                         contents += "</B>";
                     contents += '<BR/>';
