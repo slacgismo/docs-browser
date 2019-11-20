@@ -15,5 +15,5 @@ default_doc = "/README.md";
 default_gethost = "raw.githubusercontent.com";
 
 // configuration of display
-left_panel_width = 450; // how wide the TOC panel is (in pixel)
+left_panel_width = 310; // how wide the TOC panel is (in pixel)
 save_default_days = 1; // how long a cookie will be retained (in days)
