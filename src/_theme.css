@@ -40,3 +40,8 @@ DIV.CONTENTS {
     padding: 20px;
     border-radius: 10px;
 }
+
+INPUT.HEADER {
+    font-size: large;
+    font-weight: bold;
+}

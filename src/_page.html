@@ -33,20 +33,48 @@
             if ( rr.status == 200 )
             {
                 var re = /<a href="/g;
-                r0 = re[Symbol.replace](rr.responseText,'<a target="_new" href="');
+                r0 = re[Symbol.replace](rr.responseText,'<A TARGET="_blank" HREF="');
 
                 re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
+                    // console.info("to_url(tag='" + tag + "');");
                     tag = tag.substr(2,tag.length-4).trim();
-                    if ( tag.charAt(0) == '/' )
-                        ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2)).replace(' ','-');
+                    if ( tag.lastIndexOf('/') > 0 )
+                        stag = ' (' + tag.substring(0,tag.lastIndexOf('/')).replace(/\//g,' ').trim() + ')';
                     else
-                        ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1)).replace(' ','-');
-                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + tag + "</A>";
+                        stag = '';
+                    ntag = tag.substring(tag.lastIndexOf('/')+1);
+                    // console.info("  stag = '" + stag + "';");
+                    // console.info("  ntag = '" + ntag + "';");
+                    if ( tag.charAt(0) == '/' )
+                        ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
+                    else
+                        ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1));
+                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + ntag + stag + "</A>";
                 }
                 var r1 = re[Symbol.replace](r0,to_url);
-                document.writeln(r1);
+
+                re = /\(\([-A-Za-z_ 0-9\/]+\)\)/g;
+                function to_button(tag)
+                {
+                    tag = tag.substr(2,tag.length-4).trim();
+                    if ( tag.lastIndexOf('/') > 0 )
+                        stag = ' (' + tag.substring(0,tag.lastIndexOf('/')).replace(/\//g,' ').trim() + ')';
+                    else
+                        stag = '';
+                    ntag = tag.substring(tag.lastIndexOf('/')+1);
+                    // console.info("  stag = '" + stag + "';");
+                    // console.info("  ntag = '" + ntag + "';");
+                    if ( tag.charAt(0) == '/' )
+                        ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
+                    else
+                        ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1));
+                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\"><INPUT TYPE=\"submit\" CLASS=\"header\" VALUE=\"" + tag + "\" /></A>";
+                }
+                var r2 = re[Symbol.replace](r1,to_button);
+
+                document.writeln(r2);
             }
             else if ( rr.status == 403 )
             {
@@ -88,6 +116,8 @@
                     {
                         docspec = href + "_page.html?branch=master&doc=/" + value.substring(5);
                         content += '&bullet;&nbsp;<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">' + value.substring(5) + '</A><BR/>';
+                        //http://localhost:8000/_page.html?owner=slacgismo&project=gridlabd&branch=master&folder=&doc=/Python.md
+                        // '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>'
                     }
                 }
                 content = ""
@@ -134,13 +164,25 @@
 
 <DIV CLASS="TOPBLOCK">
 <TABLE WIDTH="100%" CLASS="page">
-<TR><TD ALIGN="left">Document:
+<TR><TD ALIGN="left">
+        Document: <B>
         <SCRIPT LANGUAGE="JavaScript">
             url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
-            document.write('<A TARGET="_new" ID="source" HREF="' + url + '">' + doc + '</A>');
+            document.writeln(url.substring(url.lastIndexOf('/')+1).replace('.md',''));
+            document.writeln('<A HREF="' + url + '" TARGET="_blank"><INPUT TYPE="submit" VALUE="Edit" /></A>');
         </SCRIPT>
+        </B>
     </TD>
-    <TD ALIGN="right" ID="label">
+    <TD ALIGN="left">Section: <B>
+        <SCRIPT LANGUAGE="JavaScript">
+            url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
+            stag = doc.substring(0,doc.lastIndexOf('/')).replace(/\//g,' ');
+            document.writeln(stag);
+            // document.writeln('<INPUT TYPE="submit" VALUE="Open" ONCLICK="set_folder(\'' + stag + '\')" />' )
+        </SCRIPT>
+        </B>
+    </TD>
+    <TD ALIGN="right">
         Search:
         <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
         <INPUT ID="submit" TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />

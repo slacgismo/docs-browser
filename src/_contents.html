@@ -124,13 +124,13 @@
                         // display folder name only
                         if ( folder.indexOf(subitem) != 0 )
                         {
-                            contents += indent + '<A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')">'+ value + '&#x25BD;' + '</A>'+ '<BR/>';
+                            contents += indent + '<A REL="nofollow" ONCLICK="set_folder(\'' + subitem + '\')"><SMALL>&#x25BC;&nbsp;</SMALL>' + value  + '</A>'+ '<BR/>';
                         }
 
                         // display folder contents
                         else
                         {
-                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')">'+ value + '&#x25B3;' + '</A></B>'+ '<BR/>';
+                            contents += indent + '<B><A REL="nofollow" ONCLICK="set_folder(\'' + path + '\')"><SMALL>&#x25B3;&nbsp;</SMALL>'+ value + '</A></B>'+ '<BR/>';
                             return get_contents(subitem,indent+"&nbsp;&nbsp;&nbsp;");
                         }
                     }
