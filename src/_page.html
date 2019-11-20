@@ -51,7 +51,7 @@
                         ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
                     else
                         ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1));
-                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\">" + ntag + stag + "</A>";
+                    return "<A HREF=\"" + location.origin + location.pathname + "?&doc=" + ref + ".md\">" + ntag + stag + "</A>";
                 }
                 var r1 = re[Symbol.replace](r0,to_url);
 
@@ -70,7 +70,7 @@
                         ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
                     else
                         ref = '/' + (tag.charAt(0).toUpperCase() + tag.slice(1));
-                    return "<A HREF=\"" + location.origin + location.pathname + "?owner=" + owner + "&project=" + project + "&branch=" + branch + "&doc=" + ref + ".md\"><INPUT TYPE=\"submit\" CLASS=\"header\" VALUE=\"" + tag + "\" /></A>";
+                    return "<A HREF=\"" + location.origin + location.pathname + "?doc=" + ref + ".md\"><INPUT TYPE=\"submit\" CLASS=\"header\" VALUE=\"" + tag + "\" /></A>";
                 }
                 var r2 = re[Symbol.replace](r1,to_button);
 
@@ -163,17 +163,47 @@
 </SCRIPT>
 
 <DIV CLASS="TOPBLOCK">
-<TABLE WIDTH="100%" CLASS="page">
+<TABLE WIDTH="100%" CLASS="page" BORDER=0 CELLSPACING=0 >
 <TR><TD ALIGN="left">
-        Document: <B>
-        <SCRIPT LANGUAGE="JavaScript">
+        Host:
+    </TD>
+    <TD ALIGN="left">
+        <B><SCRIPT LANGUAGE="Javascript">document.writeln(host)</SCRIPT></B>
+    </TD>
+    <TD ALIGN="left">
+        User/Org:
+    </TD>
+    <TD ALIGN="left">
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(owner)</SCRIPT></B>
+    </TD>
+    <TD ALIGN="left">
+        Project:
+    </TD>
+    <TD ALIGN="left">
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(project)</SCRIPT></B>
+    </TD>
+    <TD ALIGN="left">
+        Branch:
+    </TD>
+    <TD ALIGN="left">
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(branch)</SCRIPT></B>
+    </TD>
+</TR>
+<TR><TD ALIGN="left">
+        Document:
+    </TD>
+    <TD ALIGN="left">
+        <B><SCRIPT LANGUAGE="JavaScript">
             url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
             document.writeln(url.substring(url.lastIndexOf('/')+1).replace('.md',''));
             document.writeln('<A HREF="' + url + '" TARGET="_blank"><INPUT TYPE="submit" VALUE="Edit" /></A>');
-        </SCRIPT>
-        </B>
+        </SCRIPT></B>
     </TD>
-    <TD ALIGN="left">Section: <B>
+    <TD ALIGN="left">
+        Section:
+    </TD>
+    <TD ALIGN="left" COLSPAN=3>
+       <B>
         <SCRIPT LANGUAGE="JavaScript">
             url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
             stag = doc.substring(0,doc.lastIndexOf('/')).replace(/\//g,' ');
@@ -182,8 +212,10 @@
         </SCRIPT>
         </B>
     </TD>
-    <TD ALIGN="right">
+    <TD ALIGN="left">
         Search:
+    </TD>
+    <TD ALIGN="left">
         <INPUT ID="search" NAME="search" VALUE="" ONKEYDOWN="set_search(event)" />
         <INPUT ID="submit" TYPE="submit" VALUE="Go" ONCLICK="set_search(null)" />
     </TD>
