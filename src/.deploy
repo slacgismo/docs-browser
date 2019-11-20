@@ -3,4 +3,6 @@ _contents.html:always
 _defaults.js:missing
 _page.html:always
 _theme.css:always
+_topbar.html:always
 index.html:always
+logo.png:always
