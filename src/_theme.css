@@ -1,3 +1,6 @@
+BODY.TOPBAR {
+    background-color: white;
+}
 BODY.CONTENTS {
     background-color: #f4f4f4;
 }
@@ -15,6 +18,10 @@ A:ACTIVE {
 A:BROKEN {
 	color: red;
 	text-decoration: none;
+}
+
+H1.TOPBAR {
+    color: black;
 }
 
 DIV.HEADER {

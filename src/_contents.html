@@ -210,7 +210,6 @@
         set_default("token",github_authorization_token);
         reload_frameset();
     }
-    document.writeln("<CAPTION>" + banner + "</CAPTION>");
     var href = location.origin + location.pathname.replace('/_contents.html','/_page.html');
     document.writeln('<TR><TH ALIGN=LEFT>Host</TH>');
     if ( github_authorization_token == null )
