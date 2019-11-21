@@ -161,7 +161,7 @@ var main = main || {};
             // TODO: write error handler
             console.warn(err);
         });
-        $('#source-doc').attr("href", item.html_url);
+        $('#source-doc').css("display", "");
         $('#source-doc').text(item.html_url);
     }
 
