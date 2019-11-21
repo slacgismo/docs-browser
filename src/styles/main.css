@@ -22,9 +22,12 @@ body {
     text-align: left;
 }
 .navbar {
-    background-color: #5c5c5c;
+    background-color: #333333;
 }
 .navbar-logo {
     height: 50px;
     padding: 0 0 0 0;
+}
+.toast{
+    display: none;
 }
