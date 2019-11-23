@@ -169,37 +169,32 @@
         Host:
     </TD>
     <TD ALIGN="left">
-        <B><SCRIPT LANGUAGE="Javascript">document.writeln(host)</SCRIPT></B>
+        <B><SCRIPT LANGUAGE="Javascript">document.writeln(host);</SCRIPT></B>
     </TD>
     <TD ALIGN="left">
         User/Org:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(owner)</SCRIPT></B>
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(owner);</SCRIPT></B>
     </TD>
     <TD ALIGN="left">
         Project:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(project)</SCRIPT></B>
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(project);</SCRIPT></B>
+    </TD>
+    <TD ALIGN="left"><SCRIPT LANGUAGE="Javascript">
+        document.writeln('<A HREF="https://' + host + '/' + owner + '/' + project + '/issues/new" TARGET="_blank"><INPUT ID="issue" TYPE="submit" VALUE="Report issue" /></A>');
+        </SCRIPT>
     </TD>
     <TD ALIGN="left">
         Branch:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(branch)</SCRIPT></B>
+       <B><SCRIPT LANGUAGE="Javascript">document.writeln(branch);</SCRIPT></B>
     </TD>
 </TR>
-<TR><TD ALIGN="left">
-        Document:
-    </TD>
-    <TD ALIGN="left">
-        <B><SCRIPT LANGUAGE="JavaScript">
-            url = 'https://'+host+'/'+owner+'/'+project+'/edit/'+branch+'/docs' + doc;
-            document.writeln(url.substring(url.lastIndexOf('/')+1).replace('.md',''));
-            document.writeln('<A HREF="' + url + '" TARGET="_blank"><INPUT ID="edit" TYPE="submit" VALUE="Edit" /></A>');
-        </SCRIPT></B>
-    </TD>
+<TR>
     <TD ALIGN="left">
         Section:
     </TD>
@@ -211,6 +206,19 @@
             document.writeln(stag);
         </SCRIPT>
         </B>
+    </TD>
+    <TD ALIGN="left">
+        Document:
+    </TD>
+    <TD ALIGN="left">
+        <B><SCRIPT LANGUAGE="JavaScript">
+            url = 'https://'+host+'/'+owner+'/'+project+'/edit/'+branch+'/docs' + doc;
+            document.writeln(url.substring(url.lastIndexOf('/')+1).replace('.md',''));
+        </SCRIPT></B>
+    </TD>
+    <TD ALIGN="left"><SCRIPT LANGUAGE="Javascript">
+            document.writeln('<A HREF="' + url + '" TARGET="_blank"><INPUT ID="edit" TYPE="submit" VALUE="Edit document" /></A>');
+        </SCRIPT>
     </TD>
     <TD ALIGN="left">
         Search:
