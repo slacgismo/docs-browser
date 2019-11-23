@@ -7,11 +7,10 @@
 var package = "Docs-Browser";
 var version = "0.1";
 var branch = "prototype";
-var doelogo = "https://eesa.lbl.gov/wp-content/uploads/2015/06/DOE-Office-of-Science-LOGO_transpbg.png"
-var sulogo = "https://web.stanford.edu/group/webdev/identity/public/img/stanford-university-stacked.png";
-var slaclogo = "https://www6.slac.stanford.edu/sites/www6.slac.stanford.edu/files/slac-logo-primary-2.png";
-var gismologo = "https://gismo.slac.stanford.edu/assets/images/gismo-logo.png";
-var logo = doelogo;
+var doelogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/doe-logo.png"
+var sulogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/stanford-logo.png";
+var slaclogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/slac-logo.png";
+var gismologo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/gismo-logo.png";
 var icon = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/icon.png";
 var source = "https://github.com/slacgismo/docs-browser/tree/" + branch + "";
 var website = "http://www.slacgismo.org/";
