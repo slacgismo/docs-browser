@@ -38,19 +38,15 @@
                 re = /\[image:[-A-Za-z_ 0-9\/.]+\]/g;
                 function to_image(tag)
                 {
-                    console.info("to_image(tag='" + tag + "')");
-                    // https://raw.githubusercontent.com/dchassin/gridlabd/develop-update-docs/docs/cec-logo.png
                     ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs/";
                     tag = tag.substr(7,tag.length-8).trim();
                     return '<IMG SRC="' + ref + tag + '" />';
                 }
                 rt = re[Symbol.replace](rt,to_image);
-                console.info(rt);
 
                 re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
-                    // console.info("to_url(tag='" + tag + "')");
                     tag = tag.substr(2,tag.length-4).trim();
                     if ( tag.lastIndexOf('/') > 0 )
                         stag = ' (' + tag.substring(0,tag.lastIndexOf('/')).replace(/\//g,' ').trim() + ')';
@@ -68,7 +64,6 @@
                 re = /\(\([-A-Za-z_ 0-9\/]+\)\)/g;
                 function to_button(tag)
                 {
-                    // console.info("to_button(tag='" + tag + "')");
                     tag = tag.substr(2,tag.length-4).trim();
                     if ( tag.lastIndexOf('/') > 0 )
                         stag = ' (' + tag.substring(0,tag.lastIndexOf('/')).replace(/\//g,' ').trim() + ')';
@@ -114,7 +109,6 @@
         if ( event == null || event.key == 'Enter' )
         {
             search = document.getElementById("search").value;
-            console.info('search = "' + search + '";')
             if ( search != "" )
             {
                 function show_results(key,value)

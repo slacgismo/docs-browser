@@ -44,8 +44,7 @@ else
                 fi
                 target="s3://$1/$file"
                 if [ "$DISPOSITION" != "missing" -o "${FORCE:-no}" == "yes" -o -z "$(aws s3 ls $1/$file)" ]; then
-                    $ACTION aws s3 cp "$file" "$target"
-                    $ACTION aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read
+                    ( $ACTION aws s3 cp "$file" "$target" && $ACTION aws s3api put-object-acl --bucket "$1" --key "$file" --acl public-read ) &
                 else
                     echo "skipped: ./$file to $target"
                 fi
@@ -54,3 +53,4 @@ else
         shift 1
     done
 fi
+wait
