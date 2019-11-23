@@ -86,7 +86,6 @@
         }
         else if ( r.status == 404 )
         {
-            // https://github.com/dchassin/gridlabd/new/develop-update-docs/docs/Server/Test.md
             ref = "https://" + host + "/" + owner + "/" + project + "/new/" + branch + "/docs/" + doc;
             document.getElementById("edit").disabled = true;
             throw ('Document "' + doc + '" not found. <A HREF="' + ref + '" TARGET="_blank"><INPUT TYPE="submit" VALUE="Create"  /></A>');
@@ -188,7 +187,7 @@
     </TD>
     <TD ALIGN="left">
         <B><SCRIPT LANGUAGE="JavaScript">
-            url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
+            url = 'https://'+host+'/'+owner+'/'+project+'/edit/'+branch+'/docs' + doc;
             document.writeln(url.substring(url.lastIndexOf('/')+1).replace('.md',''));
             document.writeln('<A HREF="' + url + '" TARGET="_blank"><INPUT ID="edit" TYPE="submit" VALUE="Edit" /></A>');
         </SCRIPT></B>
