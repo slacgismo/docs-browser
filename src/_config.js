@@ -18,7 +18,7 @@ var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD V
 	+ '<A HREF="https://www.energy.gov/science-innovation/electric-power" TARGET="_blank"><IMG HEIGHT=50 SRC="' + doelogo + '" /></A>&nbsp;'
 	+ '<A HREF="https://www.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + sulogo + '" /></A>&nbsp;'
 	+ '<A HREF="https://slac.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + slaclogo + '" /></A>&nbsp;'
-	+ '<A HREF="https://www.slacgismo.org/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + gismologo + '" /></A>'
+	+ '<A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=50 SRC="' + gismologo + '" /></A>'
 	+ '</TD></TR></TABLE>';
 var year = (new Date()).getFullYear();
 if ( year > 2019 )
