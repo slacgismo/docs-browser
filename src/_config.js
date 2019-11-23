@@ -6,9 +6,12 @@
 //
 var package = "Docs-Browser";
 var version = "0.1";
-var logo = "logo.png";
+var branch = "prototype";
+var logo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/logo.png";
+var icon = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/icon.png";
+var source = "https://github.com/slacgismo/docs-browser/tree/" + branch + "";
 var website = "http://www.slacgismo.org/";
-var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="https://github.com/slacgismo/docs-browser" TARGET="_blank"><H1 CLASS="topbar"><IMG HEIGHT=50 SRC="icon.png" /> ' + package + ' Version ' + version + '</H1></A></TD><TD ALIGN="right" VALIGN="middle"><A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=50 SRC="' + logo + '" /></A></TD></TR></TABLE>';
+var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=50 SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle"><A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=50 SRC="' + logo + '" /></A></TD></TR></TABLE>';
 var year = (new Date()).getFullYear();
 if ( year > 2019 )
 {
