@@ -7,11 +7,20 @@
 var package = "Docs-Browser";
 var version = "0.1";
 var branch = "prototype";
-var logo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/logo.png";
+var doelogo = "https://eesa.lbl.gov/wp-content/uploads/2015/06/DOE-Office-of-Science-LOGO_transpbg.png"
+var sulogo = "https://web.stanford.edu/group/webdev/identity/public/img/stanford-university-stacked.png";
+var slaclogo = "https://www6.slac.stanford.edu/sites/www6.slac.stanford.edu/files/slac-logo-primary-2.png";
+var gismologo = "https://gismo.slac.stanford.edu/assets/images/gismo-logo.png";
+var logo = doelogo;
 var icon = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/icon.png";
 var source = "https://github.com/slacgismo/docs-browser/tree/" + branch + "";
 var website = "http://www.slacgismo.org/";
-var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=50 SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle"><A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=50 SRC="' + logo + '" /></A></TD></TR></TABLE>';
+var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=50 SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle">'
+	+ '<A HREF="https://www.energy.gov/science-innovation/electric-power" TARGET="_blank"><IMG HEIGHT=50 SRC="' + doelogo + '" /></A>'
+	+ '<A HREF="https://www.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + sulogo + '" /></A>'
+	+ '<A HREF="https://slac.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + slaclogo + '" /></A>'
+	+ '<A HREF="https://www.slacgismo.org/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + gismologo + '" /></A>'
+	+ '</TD></TR></TABLE>';
 var year = (new Date()).getFullYear();
 if ( year > 2019 )
 {

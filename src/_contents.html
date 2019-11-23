@@ -85,11 +85,13 @@
     }
     function set_folder(path)
     {
+        // console.info('*** set_folder("' + path + '")');
         folder = path;
         document.getElementById("contents").innerHTML = get_contents("","");
     }
     function get_contents(path,indent)
     {
+        // console.info('get_contents(path="' + path + '"); folder = "' + folder +'";');
         if ( path == "" )
         {
             contents = "";
@@ -117,6 +119,7 @@
                     if ( ext === "" && value.substring(0,1) != '_' )
                     {
                         subitem = path + '/'+ value;
+                        // console.info("  subitem = '" + subitem + "'; folder = '" + folder + "'; match = " + (folder==subitem));
 
                         // display folder name only
                         if ( folder.indexOf(subitem) != 0 )
@@ -174,6 +177,7 @@
     }
     function get_document(item)
     {
+        // console.info("get_document(item='" + item + "')")
         doc = item;
         save_defaults();
         document.getElementById("contents").innerHTML = get_contents("","");
@@ -193,12 +197,7 @@
                     key = auth.responseText;
             }
             catch {}
-            if ( key == "" )
-            {
-                wnd = window.open("https://github.com/settings/tokens","_blank");
-            }
             token = prompt("You may increase your access rate by using a personal GitHub authorization token.\nSee https://github.com/settings/tokens for details.\n\nEnter github access token:",key);
-            wnd.close();
             if ( token != null )
             {
                 github_authorization_token = token;
