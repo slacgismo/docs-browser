@@ -44,7 +44,7 @@
                 }
                 rt = re[Symbol.replace](rt,to_image);
 
-                re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
+                re = /\[\[[-A-Za-z_ 0-9\/.]+\]\]/g;
                 function to_url(tag)
                 {
                     tag = tag.substr(2,tag.length-4).trim();
