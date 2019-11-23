@@ -38,15 +38,12 @@
                 re = /\[\[[-A-Za-z_ 0-9\/]+\]\]/g;
                 function to_url(tag)
                 {
-                    // console.info("to_url(tag='" + tag + "');");
                     tag = tag.substr(2,tag.length-4).trim();
                     if ( tag.lastIndexOf('/') > 0 )
                         stag = ' (' + tag.substring(0,tag.lastIndexOf('/')).replace(/\//g,' ').trim() + ')';
                     else
                         stag = '';
                     ntag = tag.substring(tag.lastIndexOf('/')+1);
-                    // console.info("  stag = '" + stag + "';");
-                    // console.info("  ntag = '" + ntag + "';");
                     if ( tag.charAt(0) == '/' )
                         ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
                     else
@@ -64,8 +61,6 @@
                     else
                         stag = '';
                     ntag = tag.substring(tag.lastIndexOf('/')+1);
-                    // console.info("  stag = '" + stag + "';");
-                    // console.info("  ntag = '" + ntag + "';");
                     if ( tag.charAt(0) == '/' )
                         ref = '/' + (tag.charAt(1).toUpperCase() + tag.slice(2));
                     else
@@ -116,8 +111,6 @@
                     {
                         docspec = href + "_page.html?branch=master&doc=/" + value.substring(5);
                         content += '&bullet;&nbsp;<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + value + '\')">' + value.substring(5) + '</A><BR/>';
-                        //http://localhost:8000/_page.html?owner=slacgismo&project=gridlabd&branch=master&folder=&doc=/Python.md
-                        // '<A HREF="' + docspec + '" TARGET="page" ONCLICK="get_document(\'' + path + '/' + value + '\')">' + value.substring(0,value.length-3) + '</A>'
                     }
                 }
                 content = ""
@@ -157,8 +150,6 @@
 <SCRIPT LANGUAGE="JavaScript">
     var query = new URLSearchParams(window.location.search);
     var href = location.origin + location.pathname.substring(0,location.pathname.lastIndexOf('/')+1);
-    // TODO: The replacement of <name>.com -> raw.<name>usercontent.com is probably not general, but works for github.com.
-    //       Suggest using a config.js on the host to implement this translation.
     var base = 'https://' + default_gethost + '/' + owner + '/' + project + '/' + branch + '/docs';
 </SCRIPT>
 
@@ -208,7 +199,6 @@
             url = 'https://'+host+'/'+owner+'/'+project+'/tree/'+branch+'/docs' + doc;
             stag = doc.substring(0,doc.lastIndexOf('/')).replace(/\//g,' ');
             document.writeln(stag);
-            // document.writeln('<INPUT TYPE="submit" VALUE="Open" ONCLICK="set_folder(\'' + stag + '\')" />' )
         </SCRIPT>
         </B>
     </TD>
@@ -227,7 +217,6 @@
 <SCRIPT LANGUAGE="JavaScript">
     if ( github_authorization_token == null )
     {
-        // document.getElementById("label").style.color = "lightgrey";
         document.getElementById("search").disabled = true;
         document.getElementById("search").value = "(login required)";
         document.getElementById("search").style.color = "grey";
