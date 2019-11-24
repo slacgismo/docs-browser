@@ -40,7 +40,7 @@
                 {
                     ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs/";
                     tag = tag.substr(7,tag.length-8).trim();
-                    return '<IMG SRC="' + ref + tag + '" />';
+                    return '<IMG SRC="' + ref + tag + '" WIDTH="100%" />';
                 }
                 rt = re[Symbol.replace](rt,to_image);
 
