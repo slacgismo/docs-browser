@@ -22,12 +22,16 @@ A:BROKEN {
 	text-decoration: none;
 }
 
+H1 {
+    border-bottom: 1px solid lightgrey;
+}
 CODE {
     background-color: #f8f8f8;
 }
 
 PRE {
     padding: 5px;
+
     background-color: #f8f8f8;
 }
 DIV.HEADER {
@@ -46,7 +50,6 @@ DIV.PAGE {
     padding: 20px;
     border-radius: 10px;
 }
-
 DIV.CONTENTS {
     background-color: white;
     border: 1px solid grey;
