@@ -169,19 +169,25 @@
         Host:
     </TD>
     <TD ALIGN="left">
-        <B><SCRIPT LANGUAGE="Javascript">document.writeln(host);</SCRIPT></B>
+        <SCRIPT LANGUAGE="Javascript">
+            document.writeln('<A HREF="https://' + host + '/" TARGET="_blank"><B>' + host + '</B></A>');
+        </SCRIPT>
     </TD>
     <TD ALIGN="left">
         User/Org:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(owner);</SCRIPT></B>
+        <SCRIPT LANGUAGE="Javascript">
+            document.writeln('<A HREF="https://' + host + '/' + owner + '/"  TARGET="_blank"><B>' + owner + '</B></A>');
+        </SCRIPT>
     </TD>
     <TD ALIGN="left">
         Project:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(project);</SCRIPT></B>
+        <SCRIPT LANGUAGE="Javascript">
+            document.writeln('<A HREF="https://' + host + '/' + owner + '/' + project + '"  TARGET="_blank"><B>' + project + '</B></A>');
+        </SCRIPT>
     </TD>
     <TD ALIGN="left"><SCRIPT LANGUAGE="Javascript">
         document.writeln('<A HREF="https://' + host + '/' + owner + '/' + project + '/issues/new" TARGET="_blank"><INPUT ID="issue" TYPE="submit" VALUE="Report problem" /></A>');
@@ -191,7 +197,9 @@
         Branch:
     </TD>
     <TD ALIGN="left">
-       <B><SCRIPT LANGUAGE="Javascript">document.writeln(branch);</SCRIPT></B>
+        <SCRIPT LANGUAGE="Javascript">
+            document.writeln('<A HREF="https://' + host + '/' + owner + '/' + project + '/tree/' + branch + '"  TARGET="_blank"><B>' + branch + '</B></A>');
+        </SCRIPT>
     </TD>
 </TR>
 <TR>
