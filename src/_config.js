@@ -31,6 +31,10 @@ var query = new URLSearchParams(window.location.search);
 function set_default(name, value) 
 {
 	// console.info("set_default('" + name + "',value='" + value + "') --> cookie = '" + document.cookie + "'");
+	if ( document.cookie.indexOf("BLOCKED=") >= 0 )
+	{
+		return;
+	}
 	if ( value == null )
 	{
 		document.cookie = name + "=;";
@@ -109,4 +113,37 @@ function run_query(query)
 function reload_frameset()
 {
     top.frames.document.location.href=top.frames.document.location.href;
+}
+
+function cookie_view()
+{
+	if ( document.cookie == "" )
+		alert("No data stored");
+	else if ( document.cookie.indexOf("BLOCKED=") >= 0 )
+		alert("The cookie is blocked. Use 'Clear' to unblock it.")
+	else
+		alert("Current data:\n\n" + document.cookie);
+}
+
+function cookie_clear(no_confirm)
+{
+	if ( no_confirm || confirm("Clearing the cookie will delete all current data and unblock the cookie.\n\nIs this ok? ") )
+	{
+	    var cookies = document.cookie.split(";");
+	    for (var i = 0; i < cookies.length; i++) {
+	        var cookie = cookies[i];
+	        var eqPos = cookie.indexOf("=");
+	        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+	        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	    }
+	}
+}
+
+function cookie_block()
+{
+	if ( confirm("Blocking the cookie will delete all current data.\n\nIs this ok?") )
+	{
+		cookie_clear(true);
+		document.cookie = "BLOCKED";
+	}
 }

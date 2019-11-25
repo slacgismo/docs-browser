@@ -216,7 +216,11 @@
         login = "Login";
     else
         login = "Logout";
-    document.writeln('<TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /><INPUT TYPE="submit" ONCLICK="get_authorization()" VALUE="' + login + '" /></TD></TR>');
+    if ( document.cookie.indexOf("BLOCKED=") >= 0 )
+        disabled = "DISABLED";
+    else
+        disabled = "";
+    document.writeln('<TD><INPUT ID="host" NAME="host" VALUE="' + host + '" /><INPUT TYPE="submit" ONCLICK="get_authorization()" VALUE="' + login + '" ' + disabled + '/></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>User/Org</TH>');
     document.writeln('<TD><INPUT ID="owner" NAME="owner" ONBLUR="set_owner(null)" ONKEYDOWN="set_owner(event)" VALUE="' + owner + '" /></TD></TR>');
     document.writeln('<TR><TH ALIGN=LEFT>Project</TH>')
@@ -243,6 +247,10 @@
 <SCRIPT LANGUAGE="JavaScript">
     document.writeln(copyright);
 </SCRIPT>
+<P/><B>Privacy Statement:</B> This <A HREF="https://github.com/slacgismo/docs-browser" TARGET="_blank">document browser</A> is a browser-based application. <A HREF="http://www.slacgismo.org/" TARGET="_blank">SLAC Gismo</A> does not collect data using this app.  However, the hosts from which you read the source documents may collect this data without our knowledge.  Please consult the 
+<SCRIPT LANGUAGE="Javascript">document.writeln('<A HREF="https://help.' + host + '/en/github/site-policy/github-privacy-statement" TARGET="_blank">document host\'s privacy statement</A>');</SCRIPT> for more information about what information they collect.
+<P/><B>Cookie Policy:</B> This <A HREF="https://github.com/slacgismo/docs-browser" TARGET="_blank">document browser</A> places a cookie on your system to improve your document browsing experience.  This cookie includes information about the last document host, owner, project, branch, folder, file viewed, and the login token, if used.  This information is never shared directly with any server or data collection system. However, the information is used to perform API calls to the host. These calls may be tracked by the host.  Please consult the <SCRIPT LANGUAGE="Javascript">document.writeln('<A HREF="https://help.' + host + '/en/github/site-policy/github-privacy-statement" TARGET="_blank">document host\'s privacy statement</A>');</SCRIPT> for more information about how the information they collect is used. 
+<P/><B>Cookie Control:</B>: You may <INPUT TYPE="submit" VALUE="View" ONCLICK="cookie_view()"  />, <INPUT TYPE="submit" VALUE="Clear" ONCLICK="cookie_clear(false)" />, or <INPUT TYPE="submit" VALUE="Block" ONCLICK="cookie_block()" /> this <A HREF="https://github.com/slacgismo/docs-browser" TARGET="_blank">document browser</A>'s use of cookie for the domain <I><SCRIPT LANGUAGE="Javascript">document.writeln(location.hostname);</SCRIPT></I> at any time.
 </DIV>
 
 </BODY>
