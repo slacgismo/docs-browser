@@ -7,11 +7,12 @@
 var package = "Docs-Browser";
 var version = "0.1";
 var branch = "prototype";
-var doelogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/doe-logo.png"
-var sulogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/stanford-logo.png";
-var slaclogo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/slac-logo.png";
-var gismologo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/gismo-logo.png";
-var icon = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/icon.png";
+var logorepo = "https://raw.githubusercontent.com/slacgismo/docs-browser/" + branch + "/src/"
+var doelogo = logorepo + "doe-logo.png"
+var sulogo = logorepo + "stanford-logo.png";
+var slaclogo = logorepo + "slac-logo.png";
+var gismologo = logorepo + "gismo-logo.png";
+var icon = logorepo + "icon.png";
 var source = "https://github.com/slacgismo/docs-browser/tree/" + branch + "";
 var website = "http://www.slacgismo.org/";
 var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=50 SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle">'
