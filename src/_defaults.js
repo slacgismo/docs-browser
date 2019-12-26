@@ -10,11 +10,11 @@
 default_host = "github.com";
 default_owner = "dchassin";
 default_project = "gridlabd";
-default_branch = "develop";
+default_branch = "master";
 default_doc = "/README.md";
 default_gethost = "raw.githubusercontent.com";
 
 // configuration of display
 top_panel_height = 40; // how high the topbar panel is (in pixels)
 left_panel_width = 320; // how wide the TOC panel is (in pixels)
-save_default_days = 1; // how long a cookie will be retained (in days)
+save_default_days = 30; // how long a cookie will be retained (in days)
