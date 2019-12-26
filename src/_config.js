@@ -15,11 +15,11 @@ var gismologo = logorepo + "gismo-logo.png";
 var icon = logorepo + "icon.png";
 var source = "https://github.com/slacgismo/docs-browser/tree/" + branch + "";
 var website = "http://www.slacgismo.org/";
-var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=50 SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle">'
-	+ '<A HREF="https://www.energy.gov/science-innovation/electric-power" TARGET="_blank"><IMG HEIGHT=50 SRC="' + doelogo + '" /></A>&nbsp;'
-	+ '<A HREF="https://www.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + sulogo + '" /></A>&nbsp;'
-	+ '<A HREF="https://slac.stanford.edu/" TARGET="_blank"><IMG HEIGHT=50 SRC="' + slaclogo + '" /></A>&nbsp;'
-	+ '<A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=50 SRC="' + gismologo + '" /></A>'
+var banner = '<TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0><TR><TD VALIGN="bottom" ALIGN="left"><A HREF="' + source + '" TARGET="_blank"><TABLE><TR><TD><IMG HEIGHT=' + top_panel_height + ' SRC="' + icon + '" />&nbsp;</TD><TD ALIGN="left" VALIGN="middle"><B>' + package + '</B><BR/>Version ' + version + ' by SLAC GISMo</TD></TR></TABLE></A></TD><TD ALIGN="right" VALIGN="middle">'
+	+ '<A HREF="https://www.energy.gov/science-innovation/electric-power" TARGET="_blank"><IMG HEIGHT=' + top_panel_height + ' SRC="' + doelogo + '" /></A>&nbsp;'
+	+ '<A HREF="https://www.stanford.edu/" TARGET="_blank"><IMG HEIGHT=' + top_panel_height + ' SRC="' + sulogo + '" /></A>&nbsp;'
+	+ '<A HREF="https://slac.stanford.edu/" TARGET="_blank"><IMG HEIGHT=' + top_panel_height + ' SRC="' + slaclogo + '" /></A>&nbsp;'
+	+ '<A HREF="' + website + '" TARGET="_blank"><IMG HEIGHT=' + top_panel_height + ' SRC="' + gismologo + '" /></A>'
 	+ '</TD></TR></TABLE>';
 var year = (new Date()).getFullYear();
 if ( year > 2019 )

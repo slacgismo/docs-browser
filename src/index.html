@@ -1,6 +1,9 @@
 <!DOCTYPE HTML />
 <HTML>
-<FRAMESET ROWS="70,*" BORDER=2>
+<SCRIPT LANGUAGE="Javascript" SRC="_defaults.js"></SCRIPT>
+<SCRIPT LANGUAGE="Javascript">
+	document.writeln('<FRAMESET ROWS="' + (top_panel_height+20) + ',*" BORDER=2>');
+</SCRIPT>
     <FRAME SRC="_topbar.html" NORESIZE="noresize"></FRAME>
     <FRAMESET COLS="320,*" BORDER=3>
     	<FRAME NAME="contents" SRC="_contents.html"></FRAME>
