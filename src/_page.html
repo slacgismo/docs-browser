@@ -78,7 +78,7 @@
                 }
                 rt = re[Symbol.replace](rt,to_button);
 
-                document.writeln(rt);
+                document.writeln(rt.replace("\\newpage",""));
             }
             else if ( rr.status == 403 )
             {
