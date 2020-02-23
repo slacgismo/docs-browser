@@ -44,6 +44,14 @@
                 }
                 rt = re[Symbol.replace](rt,to_image);
 
+                re = /\[video:[-A-Za-z_ 0-9\/.]+\]/g;
+                function to_video(tag)
+                {
+                    tag = tag.substr(7,tag.length-8).trim();
+                    return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + tag + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                }
+                rt = re[Symbol.replace](rt,to_video);
+
                 re = /\[\[[-A-Za-z_ 0-9\/.]+\]\]/g;
                 function to_url(tag)
                 {
