@@ -86,7 +86,7 @@
                 }
                 rt = re[Symbol.replace](rt,to_button);
                 if ( rt.search("TODO") >= 0 )
-                    document.writeln("<FONT COLOR=RED>WARNING: This document has known open action items (TODO found).</FONT><HR>");
+                    document.writeln("<FONT COLOR=RED>WARNING: This document has known issues (TODO found).</FONT><HR>");
                 document.writeln(rt.replace("\\newpage",""));
             }
             else if ( rr.status == 403 )
