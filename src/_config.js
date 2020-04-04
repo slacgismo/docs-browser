@@ -40,13 +40,9 @@ function set_default(name, value)
 	{
 		document.cookie = name + "=;";
 	}
-	else if ( name == "token" )
-	{
-		document.cookie = name + "=" + value + ";path=/";
-	}
 	else
 	{
-		document.cookie = name + "=" + value + ";expires=" + save_default_days + ";path=/";
+		document.cookie = name + "=" + value + ";path=/";
 	}
 }
 

@@ -17,4 +17,3 @@ default_gethost = "raw.githubusercontent.com";
 // configuration of display
 top_panel_height = 40; // how high the topbar panel is (in pixels)
 left_panel_width = 320; // how wide the TOC panel is (in pixels)
-save_default_days = 30; // how long a cookie will be retained (in days)
