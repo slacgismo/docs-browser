@@ -86,6 +86,7 @@ var branch = get_default('branch',default_branch,null);
 var doc = get_default('doc',default_doc,null);
 var folder = get_default('folder',"",null);
 var github_authorization_token = get_default('token',null,'');
+var search_keyword = get_default('search',"",null);
 
 function save_defaults()
 {
