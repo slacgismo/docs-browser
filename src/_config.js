@@ -42,7 +42,7 @@ function set_default(name, value)
 	}
 	else
 	{
-		document.cookie = name + "=" + value + ";path=/";
+		document.cookie = name + "=" + value + ";path=/; expires=36524";
 	}
 }
 
