@@ -52,6 +52,31 @@
                 }
                 rt = re[Symbol.replace](rt,to_video);
 
+                re = /\[code:[-A-Za-z_ 0-9\/.]+\]/g;
+                function to_code(tag)
+                {
+                    ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch;
+                    tag = tag.substr(6,tag.length-7).trim();
+                    if ( tag.substr(0,1) != '/' )
+                    {
+                        tag = '/' + folder + '/' + tag;
+                    }
+                    var r3 = new XMLHttpRequest();
+                    r3.open('GET',ref+tag,false);
+                    r3.send(null);
+                    // https://raw.githubusercontent.com/slacgismo/gridlabd/develop-add-python-docs/gldcore/link/python/examples/example_1/example.py
+                    if ( r3.status == 200 )
+                    {
+                        return '<PRE><CODE>' + r3.responseText + '</CODE></PRE>';
+                    }
+                    else
+                    {
+                        return '<CODE COLOR=RED>' + ref+tag + ': ' + r3.responseText + '</CODE>';
+
+                    }
+                }
+                rt = re[Symbol.replace](rt,to_code);
+
                 re = /\[\[[-A-Za-z_ 0-9\/.]+\]\]/g;
                 function to_url(tag)
                 {
