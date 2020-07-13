@@ -38,7 +38,7 @@
                 re = /\[image:[-A-Za-z_ 0-9\/.]+\]/g;
                 function to_image(tag)
                 {
-                    ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs/" + folder;
+                    ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs" + folder + "/";
                     tag = tag.substr(7,tag.length-8).trim();
                     return '<IMG SRC="' + ref + tag + '" WIDTH="100%" />';
                 }
