@@ -81,7 +81,11 @@ var main = main || {};
         $.get(url).done(function(data) {
             let listItems = '';
             let readmeLoaded = false;
+            console.log("ANOTHER DATA")
+            console.log(data)
             data.forEach(function(item) {
+                console.log("ANOTHER ITEM")
+                console.log(item)
                 listItems += "<a href='#' class='list-group-item list-group-item-action' " +
                     "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>";
 
@@ -171,22 +175,36 @@ var main = main || {};
         // get the markdown content
         $.get(contentUrl).done(function(data) {
             // parse the markdown response
+            console.log("DATA")
+            console.log(data)
             $.ajax({
                 url: markdownParserUrl,
                 method: 'POST',
                 contentType: 'text/plain',
                 data: data
             }).done(function(response) {
+                console.log("RESPONSE")
+                console.log(response)
+                // re = /\[image:[-A-Za-z_ 0-9\/.]+\]/g;
+                // function to_image(tag)
+                // {
+                //     ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs" + folder + "/";
+                //     tag = tag.substr(7,tag.length-8).trim();
+                //     return '<IMG SRC="' + ref + tag + '" WIDTH="100%" />';
+                // }
+                // rt = re[Symbol.replace](rt,to_image);
                 ns.markdownPanelEl.html(response);
                 ns.typesetMathematicalFormulas();
             }).fail(function(parserErr) {
                 // TODO: write error handler
                 console.warn(parserErr);
-            });
+            });localStorage
         }).fail(function(err) {
             // TODO: write error handler
             console.warn(err);
         });
+        console.log("ITEM")
+        console.log(item)
         $('#source-doc').css("display", "");
         $('#source-doc').text(item.html_url);
     }
