@@ -81,11 +81,7 @@ var main = main || {};
         $.get(url).done(function(data) {
             let listItems = '';
             let readmeLoaded = false;
-            console.log("ANOTHER DATA")
-            console.log(data)
             data.forEach(function(item) {
-                console.log("ANOTHER ITEM")
-                console.log(item)
                 listItems += "<a href='#' class='list-group-item list-group-item-action' " +
                     "onclick='main.loadMarkdownContent(" + JSON.stringify(item) + ")'>" + item.name + "</a>";
 
@@ -169,42 +165,33 @@ var main = main || {};
      * then send it to another api endpoint to convert it into the appropriate
      * markup that we then display on screen.
      */
-    ns.loadMarkdownContent = function(item, host = ns.defaultHost) {
+    ns.loadMarkdownContent = function(item, host = ns.defaultHost, owner = ns.defaultOwner, branch = ns.defaultBranch, folder = ns.defaultFolder) {
         const contentUrl = item.download_url,
             markdownParserUrl = 'https://api.' + host + '/markdown/raw';
         // get the markdown content
         $.get(contentUrl).done(function(data) {
             // parse the markdown response
-            console.log("DATA")
-            console.log(data)
             $.ajax({
                 url: markdownParserUrl,
                 method: 'POST',
                 contentType: 'text/plain',
                 data: data
             }).done(function(response) {
-                console.log("RESPONSE")
-                console.log(response)
-                // re = /\[image:[-A-Za-z_ 0-9\/.]+\]/g;
-                // function to_image(tag)
-                // {
-                //     ref = "https://" + default_gethost + "/" + owner + "/" + project + "/" + branch + "/docs" + folder + "/";
-                //     tag = tag.substr(7,tag.length-8).trim();
-                //     return '<IMG SRC="' + ref + tag + '" WIDTH="100%" />';
-                // }
-                // rt = re[Symbol.replace](rt,to_image);
+                const url = 'https://raw.githubusercontent.com/' + '/' + owner + '/' + 'gridlabd' + '/' + branch + '/docs'+ folder + '/';
+                const images = response.match(/\[image:[-A-Za-z_ 0-9\/.]+\]/g);
+                response = replaceImages(response, url, images);
+                const videos = response.match(/\[video:[-A-Za-z_ 0-9\/.]+\]/g);
+                response = replaceVideos(response, url, videos);
                 ns.markdownPanelEl.html(response);
                 ns.typesetMathematicalFormulas();
             }).fail(function(parserErr) {
                 // TODO: write error handler
                 console.warn(parserErr);
-            });localStorage
+            });
         }).fail(function(err) {
             // TODO: write error handler
             console.warn(err);
         });
-        console.log("ITEM")
-        console.log(item)
         $('#source-doc').css("display", "");
         $('#source-doc').text(item.html_url);
     }
@@ -221,3 +208,28 @@ var main = main || {};
     // on document.ready, get everything going
     $(function() { onLoad(); })
 })(main);
+
+//helper functions
+function replaceImages(response, url, images) {
+    if (images == null) {
+        return response;
+    }
+    let replacedImages = ""
+    for (image in images) {
+        const tag = images[image].substr(7,images[image].length-8).trim();
+        replacedImages = response.replace(images[image], '<IMG SRC="' + url + tag + '" WIDTH="100%" />');
+    }
+    return replacedImages;
+}
+
+function replaceVideos(response, url, videos) {
+    if (videos == null) {
+        return response;
+    }
+    let replacedVideos = ""
+    for (video in videos) {
+        tag = videos[video].substr(7,videos[video].length-8).trim();
+        replacedVideos = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + tag + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    }
+    return replacedVideos
+}
