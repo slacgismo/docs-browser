@@ -1,5 +1,14 @@
 import React from "react";
 import axios from "axios";
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+  root: {
+    padding: 10,
+    size: 12,
+    color: "rgba(255, 255, 255, 0.7)"
+  }
+};
 
 export class TableOfContents extends React.Component {
   constructor(props) {
@@ -31,6 +40,7 @@ export class TableOfContents extends React.Component {
       .catch((error) => {
         //this is no docs folder error handling
         console.warn(error);
+        this.setState({ contentsList: [] });
       });
   };
 
@@ -64,6 +74,11 @@ export class TableOfContents extends React.Component {
   contentsListComp = (contentsList) => {
     let checkFiles = /^.*\.(md)$/;
     const contents = [];
+
+    if(contentsList.length === 0) {
+      return "No documents listed";
+    }
+  
     for (let i = 0; i < contentsList.length; i++) {
       if (checkFiles.test(contentsList[i][0])) {
         contents.push(this.setFileComponent(i, contentsList[i]));
@@ -77,7 +92,8 @@ export class TableOfContents extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       prevProps.project !== this.props.project ||
-      prevProps.branch !== this.props.branch
+      prevProps.branch !== this.props.branch ||
+      prevProps.org !== this.props.org
     ) {
       this.getContentsList(
         this.props.host,
@@ -89,12 +105,13 @@ export class TableOfContents extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <ul>{this.contentsListComp(this.state.contentsList)}</ul>
       </div>
     );
   }
 }
 
-export default TableOfContents;
+export default withStyles(styles)(TableOfContents);

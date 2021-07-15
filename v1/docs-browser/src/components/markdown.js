@@ -1,5 +1,13 @@
 import React from "react";
 import axios from "axios";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  root: {
+    padding: 10,
+    size: 12,
+  },
+};
 
 export class Markdown extends React.Component {
   constructor(props) {
@@ -13,8 +21,29 @@ export class Markdown extends React.Component {
     const url = file[1];
     axios
       .get(url)
-      .then((response) => {
-        this.setState({ markdownBody: response["data"] });
+      .then((res) => res.data)
+      .then((data) => {
+        const markdownParserUrl = "https://api.github.com/markdown";
+        const markdownData = {
+          "text": data
+        }
+        const markdownHeaders = {
+          "Accept": "application/vnd.github.v3+json"
+        }
+        axios
+          .post(markdownParserUrl, {
+            markdownHeaders,
+            markdownData
+          })
+          .then((response) => {
+            this.setState({ markdownBody: response["data"] });
+          })
+          .catch((error) => {
+            console.warn(error);
+          });
+      })
+      .catch((error) => {
+        console.warn(error);
       })
       .catch((error) => {
         console.warn(error);
@@ -28,8 +57,10 @@ export class Markdown extends React.Component {
   }
 
   render() {
-    return <div>{this.state.markdownBody}</div>;
+    return (
+      <div dangerouslySetInnerHTML={{ __html: this.state.markdownBody }} />
+    );
   }
 }
 
-export default Markdown;
+export default withStyles(styles)(Markdown);

@@ -1,5 +1,22 @@
 import React from "react";
 import axios from "axios";
+import clsx from 'clsx';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const styles = {
+  root: {
+    padding: 10,
+    size: 12
+  },
+  input: {
+    padding: 5,
+    color: "rgba(255, 255, 255, 0.7)",
+    "&:hover,&:focus": {
+      backgroundColor: "rgba(255, 255, 255, 0.08)",
+    },
+  }
+};
 
 export class Settings extends React.Component {
   constructor(props) {
@@ -29,7 +46,7 @@ export class Settings extends React.Component {
         });
     }
 
-    if (prevProps.project !== this.props.project) {
+    if (prevProps.project !== this.props.project || prevProps.org !== this.props.org) {
       const url =
         "https://api." +
         this.props.host +
@@ -51,74 +68,57 @@ export class Settings extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-        <div>
-          <div class="form-group">
-            <label for="host-input">Host</label>
-            <input
-              type="text"
-              class="form-control"
-              id="host-input"
-              aria-describedby="host-help"
-              placeholder="github.com"
-              onBlur={(e) => this.props.handleStateChange("host", e.target.value)}
-            />
-            <small id="host-help" class="form-text text-muted">
-              This should generally be set to github.com but can be set to any
-              host that support the GitHub API.
-            </small>
-          </div>
-          <div class="form-group">
-            <label for="user-org-input">User/Organization</label>
-            <input
-              type="text"
-              class="form-control"
-              id="user-org-input"
-              aria-describedby="user-org-help"
-              placeholder="Enter User/Organization"
-              onBlur={(e) => this.props.handleStateChange("org", e.target.value)}
-            />
-            <small id="user-org-help" class="form-text text-muted">
-              This must be set to the default project owner (user or organization,
-              e.g., slacgismo).
-            </small>
-          </div>
-          <hr />
-          <div class="form-group">
-            <label for="project-input">Project</label>
-            <select
-              class="form-control"
-              id="project-select"
-              aria-describedby="project-help"
-              onChange={(e) => this.props.handleStateChange("project", e.target.value)}
-            >
-              {this.state.projectList.map((project) => (
-                <option>{project}</option>
-              ))}
-            </select>
-            <small id="project-help" class="form-text text-muted">
-              This must be set to the default project name (e.g., docs-browser).
-            </small>
-          </div>
-          <div class="form-group">
-            <label for="branch-select">Branch</label>
-            <select
-              class="form-control"
-              id="branch-select"
-              aria-describedby="branch-help"
-              onChange={(e) => this.props.handleStateChange("branch", e.target.value)}
-            >
-              {this.state.branchList.map((branch) => (
-                <option>{branch}</option>
-              ))}
-            </select>
-            <small id="branch-help" class="form-text text-muted">
-              This should be set to the default branch (e.g., master).
-            </small>
-          </div>
-        </div>
+      <div className={classes.root}>
+        <TextField
+          id="standard-basic-host"
+          placeholder="github.com"
+          InputProps={{
+            className: classes.input
+          }}
+          onBlur={(e) => this.props.handleStateChange("host", e.target.value)}
+        />
+        <TextField
+          id="standard-basic-org"
+          placeholder="Enter User or Organization"
+          InputProps={{
+            className: classes.input
+          }}
+          onBlur={(e) => this.props.handleStateChange("org", e.target.value)}
+          helperText="This must be set to the default project owner (user or organization, e.g., slacgismo)."
+        />
+        <TextField
+          id="standard-select-project"
+          select
+          label="Select Project"
+          InputProps={{
+            className: classes.input
+          }}
+          onBlur={(e) => this.props.handleStateChange("project", e.target.value)}
+          helperText="This must be set to the default project owner (user or organization, e.g., slacgismo)."
+        >
+          {this.state.projectList.map((project) => (
+              <option key={project} value={project}>{project}</option>
+          ))}
+        </TextField>
+        <TextField
+          id="standard-select-branch"
+          select
+          label="Select Branch"
+          InputProps={{
+            className: classes.input
+          }}
+          onBlur={(e) => this.props.handleStateChange("branch", e.target.value)}
+          helperText="This should be set to the default branch (e.g., master)."
+        >
+          {this.state.branchList.map((branch) => (
+              <option key={branch} value={branch}>{branch}</option>
+          ))}
+        </TextField>
+      </div>
     );
   }
 }
 
-export default Settings;
+export default withStyles(styles)(Settings);
