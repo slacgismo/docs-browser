@@ -1,8 +1,5 @@
 import React from "react";
-import { Paperbase } from "./Layouts/Base";
-// import { TableOfContents } from "./Components/TableOfContents";
-// import { Settings } from "./Components/Settings";
-// import { Markdown } from "./Components/Markdown";
+import Paperbase from "./Layouts/Base.js";
 
 import "./css/App.css";
 
@@ -36,7 +33,7 @@ handleStateChange = (field, value) => {
           handleStateChange = {(field, value) =>
             this.handleStateChange(field, value)
           }
-          />
+        />
       </div>
     );
   }
